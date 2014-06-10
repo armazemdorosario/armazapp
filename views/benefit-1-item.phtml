@@ -1,0 +1,73 @@
+<?php
+use armazemapp\FacebookAdapter;
+?>
+<article class="has-progress-on-top" id="event-<?php echo $benefit['eventfbid']; ?>">
+	<div class="list-group-item
+	<?php if($status==2) { ?>
+    	strip strip-closed
+	<?php } elseif($is_full) { ?>
+    	strip strip-full
+	<?php }elseif($status==3) { ?>
+    	strip strip-promoters
+	<?php } elseif($genderCanAttend) {?>
+    strip strip-open
+	<?php } ?>">
+    	<?php include 'benefit-header.phtml'; ?>
+    	<p>
+			<?php echo _('The limit of this VIP list is'); ?>
+			<?php echo $benefit['max_num_people_chosen']; ?>
+			<?php echo $facebook->g(_('women'), _('men'), _('people'), $benefit['accepted_gender']); ?>.
+		</p>
+<?php
+$user_granted_permissions = $facebook->checkPermission('publish_stream') && $facebook->checkPermission('rsvp_event');
+if(!$user_granted_permissions) { ?>
+	<p class="text-alert">Antes de participar, libere acesso ao app.</p>
+	<?php } else {
+	if(!$is_full && $genderCanAttend) {
+		if($attended) {
+			include('benefit-1-claimed-msg.phtml');
+		}
+		else {
+			if($is_open) {
+				if($facebook->canClaimBenefits()) {
+					include('benefit-1-claim-form.phtml');
+				} else {
+		?>
+		<p class="alert alert-danger">Voc&ecirc; n&atilde;o poder&aacute; participar desta Lista VIP porque n&atilde;o compareceu a algum evento no qual ganhou ingresso nos &uacute;ltimos 30 dias.</p>
+		<?php
+				}
+			
+			}
+			elseif($status==3) {
+	?>
+	<p>Esta lista VIP é preenchida pelos <a href="http://armazemdorosario.com.br/promoters/" rel="external" target="_blank"><i>promoters</i> do Armazém</a>. <a href="http://armazemdorosario.com.br/promoters/" rel="external" target="_blank">Entre em contato com os <i>promoters</i></a> para solicitar participação.</p>
+	<?php
+			}
+		}
+	}
+	
+	if ($is_full && $genderCanAttend) {
+		if($attended) {
+			echo '<div class="alert alert-success"><label class="label label-success">Você deu sorte!</label> A lista VIP já está cheia, mas você está nela!</div>';
+		}
+		else {
+			include ('benefit-1-full-msg.phtml');
+		}
+	}
+?>
+		<p class="text-info"><?php echo $facebook->getViplistBenefitTextInfo($benefit['num_people_claimed'], $attended, $benefit['accepted_gender']); ?></p>
+		<p>
+			<a target="_top" onClick="_gaq.push(['_trackEvent', 'see_whos_on_the_list', 'btn_default_click', '<?php echo $benefit['eventfbid']; ?>']);" class="btn btn-sm btn-default" href="http://apps.facebook.com/armazemdorosario/lista.php?eventfbid=<?php echo $benefit['eventfbid']; ?>&amp;benefit=1">
+				Veja quem está na lista
+			</a>
+		</p>
+<?php } // end if user granted permissions ?>
+<?php include 'benefit-1-listing-footer.phtml'; ?>
+	</div>
+	<div class="progress">
+        <div class="progress-bar progress-bar-<?php echo $facebook->getTrustLevelCssClass(100-$percent); ?>" <?php echo 'role="progressbar" aria-valuenow="' . $percent . '" aria-valuemin="0" aria-valuemax="100"'; ?> data-remaining="<?php echo 100-$percent; ?>" style="width: <?php echo str_replace(',', '.', $percent) ?>%;">
+            <span class="sr-only"><?php echo _('List'); ?> <?php echo $percent ?>% <?php echo _('full'); ?></span>
+        </div>
+    </div>
+</article>
+<hr />

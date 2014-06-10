@@ -1,0 +1,14 @@
+<form method="post">
+    <input id="eventname" name="eventname" type="hidden" value="<?php echo htmlentities($fbevent['name']); ?>" />
+    <input id="eventfbid" name="eventfbid" type="hidden" value="<?php echo htmlentities($benefit['eventfbid']); ?>" />
+    <input id="photo" name="photo" type="hidden" value="<?php echo htmlentities($benefit['photo']); ?>" />
+    <input id="plural_name" name="plural_name" type="hidden" value="<?php echo htmlentities($benefit['plural_name']); ?>" />
+    <input id="objectname" name="objectname" type="hidden" value="<?php echo htmlentities($benefit['objectname']); ?>" />
+    <input id="max_num_people_chosen" name="max_num_people_chosen" type="hidden" value="<?php echo htmlentities($benefit['max_num_people_chosen']); ?>" />
+        <p>
+            <button onClick="_gaq.push(['_trackEvent', 'enter_giveaway', 'submit', '<?php echo htmlentities($benefit['eventfbid']); ?>']);" class="btn btn-primary btn-lg" id="claimBenefit" name="claimBenefit" type="submit">
+                <?php echo _('Enter to the giveaway'); ?>
+            </button>
+        </p>
+    <div class="clear clearfix"></div>
+</form>

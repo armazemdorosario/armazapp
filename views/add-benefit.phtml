@@ -1,0 +1,51 @@
+<form class="container" method="post" <?php echo 'role="form"'; ?>>
+	<fieldset>
+    	<legend><?php echo _('Add new benefit'); ?></legend>
+        <div class="form-group">
+            <label class="control-label" for="eventfbid">
+                <?php echo _('Event ID on Facebook'); ?>
+            </label>
+            <input autocomplete="off" class="form-control" id="eventfbid" name="eventfbid"
+            placeholder="<?php echo _('Event ID on Facebook'); ?>" required="required"
+            title="<?php echo _('Please, type a valid Facebook Event ID.'); ?>" type="text" />
+        </div>
+        <div class="form-group">
+        	<span class="control-label">
+            	<?php echo _('Benefit type'); ?>
+            </span>
+            <label class="radio" title="<?php echo _('VIP List'); ?>">
+            	<input name="benefit_type" type="radio" value="1" />
+            	Lista VIP
+            </label>
+            <label class="radio" title="<?php echo _('Sweepstake'); ?>">
+            	<input name="benefit_type" type="radio" value="2" />
+            	Sorteio
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="limite">
+            	<?php echo _('Maximum number of people on the list'); ?>
+            </label>
+            <input autocomplete="on" class="form-control" id="limite" min="8" max="200" name="limite"
+            placeholder="<?php echo _('Maximum number of people on the list'); ?>" required="required"
+            title="<?php echo _('At least 8 and at most 200. Example: 100'); ?>" type="number" step="1">
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="genero"><?php echo _('The list accepts'); ?></label>
+            <select class="form-control" id="genero" name="genero"
+            title="<?php echo _('Please, select an item'); ?>">
+                <option selected="selected" value=""><?php echo _('Men and women'); ?></option>
+                <option value="female"><?php echo _('Only women'); ?></option>
+                <option value="male"><?php echo _('Only men'); ?></option>
+            </select>
+        </div>
+        <div class="form-group">
+        	
+        </div>
+        <button class="btn btn-primary" type="submit"
+        onClick="_gaq.push(['_trackEvent', 'add_benefit', 'submit', 'primary']);">
+        	<span class="glyphicon glyphicon-plus-sign">&nbsp;</span>
+        	<?php echo _('Add event'); ?>
+        </button>
+	</fieldset>
+</form>

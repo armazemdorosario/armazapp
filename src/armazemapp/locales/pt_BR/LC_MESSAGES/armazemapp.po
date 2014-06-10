@@ -1,0 +1,430 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Armazém App v0.2\n"
+"POT-Creation-Date: 2014-01-09 19:28-0300\n"
+"PO-Revision-Date: 2014-01-09 19:28-0300\n"
+"Last-Translator: Jimmy Andrade <ti@ultracomunica.com.br>\n"
+"Language-Team: Paulo Henrique (Jimmy) Andrade Mota C. <ti@ultracomunica.com."
+"br>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.3\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: C:\\wamp\\www\\armazemapp\n"
+
+#: C:\wamp\www\armazemapp/lista.php:22
+msgid "VIP list"
+msgstr "Lista VIP"
+
+#: C:\wamp\www\armazemapp/lista.php:24
+msgid "Back to homepage"
+msgstr "Voltar ao início"
+
+#: C:\wamp\www\armazemapp/lista.php:25 C:\wamp\www\armazemapp/login.php:53
+msgid "Back"
+msgstr "Voltar"
+
+#: C:\wamp\www\armazemapp/lista.php:34
+msgid "Profile of"
+msgstr "Perfil de"
+
+#: C:\wamp\www\armazemapp/lista.php:35
+msgid "Photo of"
+msgstr "Foto de"
+
+#: C:\wamp\www\armazemapp/lista.php:40
+msgid "It's you. Secret."
+msgstr "É você! Segredo!"
+
+#: C:\wamp\www\armazemapp/lista.php:45
+msgid "It's you!"
+msgstr "É você!"
+
+#: C:\wamp\www\armazemapp/login.php:31
+msgid "Unable to connect you to"
+msgstr "Não conseguimos conectar você ao"
+
+#: C:\wamp\www\armazemapp/login.php:32
+msgid "Please try once again"
+msgstr "Por favor, tente novamente"
+
+#: C:\wamp\www\armazemapp/login.php:34 C:\wamp\www\armazemapp/login.php:35
+msgid "Connect your Facebook to"
+msgstr "Conecte seu Facebook ao"
+
+#: C:\wamp\www\armazemapp/login.php:41
+msgid "Login with Facebook"
+msgstr "Entrar com o Facebook"
+
+#: C:\wamp\www\armazemapp/login.php:44
+msgid "This app never will post anything without your permission."
+msgstr "Nunca postaremos nada sem sua permissão."
+
+#: C:\wamp\www\armazemapp/login.php:50
+msgid "Oops!"
+msgstr "Ops!"
+
+#: C:\wamp\www\armazemapp/login.php:51
+msgid "This app is for maintenance. Please check back again later."
+msgstr ""
+"Este aplicativo está em manutenção. Por favor, volte novamente mais tarde."
+
+#: C:\wamp\www\armazemapp/src/armazemapp/FacebookAdapter.php:40
+msgid ""
+"With our app, you can join VIP lists and RSVP at events at the club. Try and "
+"tell everyone!"
+msgstr ""
+"Com o nosso aplicativo, você pode participar de listas VIP e confirmar "
+"presença em eventos da casa. Experimente e conte pra galera!"
+
+#: C:\wamp\www\armazemapp/views/add-benefit.phtml:3
+msgid "Add event to VIP List"
+msgstr "Adicionar evento à Lista VIP"
+
+#: C:\wamp\www\armazemapp/views/add-benefit.phtml:8
+#: C:\wamp\www\armazemapp/views/add-benefit.phtml:10
+msgid "Event ID on Facebook"
+msgstr "ID do evento no Facebook"
+
+#: C:\wamp\www\armazemapp/views/add-benefit.phtml:10
+msgid "Only numbers"
+msgstr "Apenas números"
+
+#: C:\wamp\www\armazemapp/views/add-benefit.phtml:12
+msgid "Use a valid event ID"
+msgstr "Utilize um ID de evento válido"
+
+#: C:\wamp\www\armazemapp/views/add-benefit.phtml:16
+#: C:\wamp\www\armazemapp/views/add-benefit.phtml:17
+msgid "Maximum number of people on the list"
+msgstr "Limite máximo de pessoas na lista"
+
+#: C:\wamp\www\armazemapp/views/add-benefit.phtml:17
+msgid "At least 20 and at most 200. Example: 100"
+msgstr "No mínimo 20 e no máximo 200. Exemplo: 100"
+
+#: C:\wamp\www\armazemapp/views/add-benefit.phtml:20
+msgid "The list accepts"
+msgstr "A lista aceita"
+
+#: C:\wamp\www\armazemapp/views/add-benefit.phtml:21
+msgid "Select an item"
+msgstr "Selecione um item"
+
+#: C:\wamp\www\armazemapp/views/add-benefit.phtml:22
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:62
+msgid "Only women"
+msgstr "Apenas mulheres"
+
+#: C:\wamp\www\armazemapp/views/add-benefit.phtml:23
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:62
+msgid "Men and women"
+msgstr "Homens e mulheres"
+
+#: C:\wamp\www\armazemapp/views/add-benefit.phtml:24
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:62
+msgid "Only men"
+msgstr "Apenas homens"
+
+#: C:\wamp\www\armazemapp/views/add-benefit.phtml:29
+msgid "Add event"
+msgstr "Adicionar evento"
+
+#: C:\wamp\www\armazemapp/views/cadastro-usuario.phtml:3
+msgid "Tell us"
+msgstr "Conta pra gente"
+
+#: C:\wamp\www\armazemapp/views/cadastro-usuario.phtml:5
+msgid "What is your full real name?"
+msgstr "Qual é o seu nome verdadeiro completo?"
+
+#: C:\wamp\www\armazemapp/views/cadastro-usuario.phtml:6
+msgid "Full name"
+msgstr "Nome completo"
+
+#: C:\wamp\www\armazemapp/views/cadastro-usuario.phtml:7
+msgid "Must be the real name, the one that is on ID card."
+msgstr ""
+"Tem que ser o seu nome de verdade, do mesmo jeito que está na carteira de "
+"identidade."
+
+#: C:\wamp\www\armazemapp/views/cadastro-usuario.phtml:10
+msgid "What is the number of your ID card?"
+msgstr "Qual é o número da sua carteira de identidade?"
+
+#: C:\wamp\www\armazemapp/views/cadastro-usuario.phtml:11
+msgid "Number of ID card"
+msgstr "Número da identidade"
+
+#: C:\wamp\www\armazemapp/views/cadastro-usuario.phtml:13
+msgid ""
+"We ask for your ID card because we need to verify that you are really you"
+msgstr "Pedimos sua identidade para verificar que você é realmente você."
+
+#: C:\wamp\www\armazemapp/views/cadastro-usuario.phtml:15
+msgid "This information will not appear to other people."
+msgstr "Esta informação não aparecerá para outras pessoas."
+
+#: C:\wamp\www\armazemapp/views/cadastro-usuario.phtml:21
+msgid "Finish my registration"
+msgstr "Finalizar meu cadastro"
+
+#: C:\wamp\www\armazemapp/views/cadastro-usuario.phtml:24
+msgid ""
+"When finalizing your registration, you acknowledge that the above "
+"information is correct."
+msgstr ""
+"Ao finalizar seu cadastro, você  confirma que as informações acima estão "
+"corretas."
+
+#: C:\wamp\www\armazemapp/views/cadastro-usuario.phtml:26
+msgid "Your participation is subject to"
+msgstr "Sua participação está sujeita ao"
+
+#: C:\wamp\www\armazemapp/views/cadastro-usuario.phtml:28
+msgid "regulation of"
+msgstr "regulamento do"
+
+#: C:\wamp\www\armazemapp/views/header.phtml:10
+msgid "Welcome [female]"
+msgstr "Seja bem-vinda"
+
+#: C:\wamp\www\armazemapp/views/header.phtml:10
+msgid "Welcome [male]"
+msgstr "Seja bem-vindo"
+
+#: C:\wamp\www\armazemapp/views/header.phtml:10
+msgid "Welcome [generic]"
+msgstr "Boas-vindas"
+
+#: C:\wamp\www\armazemapp/views/header.phtml:14
+msgid "Before you continue to use the app, you need to confirm a few things..."
+msgstr ""
+"Antes de continuar a utilizar o aplicativo, você precisa confirmar algumas "
+"coisas..."
+
+#: C:\wamp\www\armazemapp/views/header.phtml:20
+msgid "Logout"
+msgstr "Sair"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:6
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:3
+msgid "Your registration is ready!"
+msgstr "Seu cadastro está pronto!"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:7
+msgid "Check now events with VIP list"
+msgstr "Confira os eventos com lista VIP"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:8
+msgid ""
+"Attention: You need to click or tap \"Enter the VIP list\" to participate."
+msgstr ""
+"Atenção: você precisa clicar ou tocar em \"Entrar na lista VIP\" para "
+"participar."
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:15
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:8
+msgid "No event for now"
+msgstr "Nenhum evento por enquanto"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:16
+msgid "So far, there is no event with VIP list or something..."
+msgstr "Até o momento, não há nenhum evento com Lista VIP ou algo do tipo..."
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:50
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:59
+msgid "people"
+msgstr "pessoas"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:50
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:59
+msgid "women"
+msgstr "mulheres"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:50
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:59
+msgid "men"
+msgstr "homens"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:51
+msgid "are already in the list"
+msgstr "já estão na lista"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:52
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:83
+msgid "including you"
+msgstr "incluindo você"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:57
+msgid "The limit of this VIP list is"
+msgstr "O limite desta lista VIP é de"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:63
+msgid "can join this list"
+msgstr "podem participar desta lista"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:68
+msgid "List"
+msgstr "Lista"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:68
+msgid "full"
+msgstr "completa"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:77
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:98
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:126
+msgid "Enter the VIP list"
+msgstr "Entrar na lista VIP"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:83
+msgid "Hey!"
+msgstr "Ei!"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:85
+msgid "Your name is on the list"
+msgstr "Seu nome já está na lista"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:99
+msgid ""
+"If you enable this feature, other users will not see that you are in the VIP "
+"list."
+msgstr ""
+"Se você ativar este recurso, outros usuários não poderão ver que você está "
+"na lista VIP."
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:101
+msgid "Sneak [female]"
+msgstr "Entrar escondida"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:101
+msgid "Sneak [male]"
+msgstr "Entrar escondido"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:101
+msgid "Sneak [generic]"
+msgstr "Entrar escondido(a)"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:111
+msgid "What are you waiting to get in?"
+msgstr "Tá esperando o quê pra entrar?"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:113
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:85
+msgid "What are you waiting for?"
+msgstr "Tá esperando o quê?"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:132
+msgid "Full list"
+msgstr "Lista cheia"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-eventos.phtml:132
+msgid "Next time!"
+msgstr "Fica para a próxima!"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:9
+msgid "So far, there is no event with ticket sweepstakes"
+msgstr "Até o momento, não estamos sorteando ingressos para nenhum evento"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:16
+msgid "Enjoy exclusive promotions of the app."
+msgstr "Aproveite as promoções exclusivas do aplicativo."
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:42
+msgid ""
+"You are already competing for the ticket. Once the result is generated, we "
+"will post here."
+msgstr ""
+"Você já está concorrendo aos ingressos. Assim que o resultado sair, "
+"divulgaremos aqui."
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:49
+msgid "Enter to the giveaway"
+msgstr "Participar do sorteio"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:61
+msgid "Giveaway closed."
+msgstr "Sorteio encerrado."
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:63
+msgid "You didn't participate in it."
+msgstr "Você não participou."
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:64
+msgid "What a pity! You were not drawn. [female]"
+msgstr "Que pena! Você não foi sorteada."
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:64
+msgid "What a pity! You were not drawn. [male]"
+msgstr "Que pena! Você não foi sorteado."
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:64
+msgid "What a pity! You were not drawn. [generic]"
+msgstr "Que pena! Você não foi sorteado(a)."
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:65
+msgid "You were drawn [female]"
+msgstr "Você foi sorteada"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:65
+msgid "You were drawn [male]"
+msgstr "Você foi sorteado"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:65
+msgid "You were drawn"
+msgstr "Você foi sorteado(a)"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:70
+msgid "No one is participating yet."
+msgstr "Ninguém está participando ainda."
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:76
+msgid "You're the only person who is participating."
+msgstr "Você é a única pessoa que está participando."
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:77
+msgid "Only one person is participating."
+msgstr "Apenas uma pessoa está participando."
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:79
+msgid "What are you waiting for join in too?"
+msgstr "Tá esperando o quê pra participar?"
+
+#: C:\wamp\www\armazemapp/views/listagem-de-sorteios.phtml:83
+msgid "people are participating"
+msgstr "pessoas estão participando"
+
+#: C:\wamp\www\armazemapp/views/menor-de-idade.phtml:2
+msgid "It seems that you can not use our app."
+msgstr "Parece que você não pode usar nosso aplicativo."
+
+#: C:\wamp\www\armazemapp/views/menor-de-idade.phtml:4
+msgid ""
+"Facebook told us that you are not yet of legal age, and minors can not use "
+"this app."
+msgstr ""
+"O Facebook nos contou que você ainda não é maior de idade, e menores de "
+"idade não podem usar este plicativo."
+
+#: C:\wamp\www\armazemapp/views/menor-de-idade.phtml:6
+msgid "Come back here when you're a big boy."
+msgstr "Volte aqui quando estiver grandinho."
+
+#: C:\wamp\www\armazemapp/views/menor-de-idade.phtml:6
+msgid "Come back here when you're a big girl."
+msgstr "Volte aqui quando estiver grandinha."
+
+#: C:\wamp\www\armazemapp/views/menor-de-idade.phtml:6
+msgid "Come back here when you come of age."
+msgstr "Volte aqui quando você atingir a maioridade."
+
+#~ msgid "Enter the VIP List"
+#~ msgstr "Entrar na Lista VIP"
+
+#~ msgid "only men"
+#~ msgstr "Apenas homens"

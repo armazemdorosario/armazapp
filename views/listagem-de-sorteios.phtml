@@ -1,0 +1,16 @@
+<?phpif ( $ticket_sweepstakes_post ) {
+	include 'modal-sorteio.phtml';
+} // end if $ticket_sweepstakes_post
+if( $facebook->howManyEvents(2) < 1 ) {
+	include 'message-no-benefits-for-event.phtml';
+} else {
+	foreach ($facebook->getCurrentBenefits(2) as $benefit) {
+		$status = intval($benefit['status']);
+		$fbevent = $facebook->getEventInfo($benefit['eventfbid']);
+		$claimed = $facebook->claimedBenefit(2, $benefit['eventfbid']);
+		$num_people_claimed = intval($benefit['num_people_claimed']);
+		if($status) {
+			include 'benefit-2-item.phtml';
+		}
+	}
+}

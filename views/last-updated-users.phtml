@@ -1,0 +1,10 @@
+﻿<a href="#" class="dropdown-toggle" data-toggle="dropdown" onClick="_gaq.push(['_trackEvent', 'navbar', 'link_click', 'new_users']);">
+	<span class="glyphicon glyphicon-user"></span>
+    <span class="sr-only">Últimos cadastros</span>
+    <b class="caret"></b>
+</a>
+<ul>     	
+<?php foreach($facebook->getUsersThatRegisteredToday() as $new_user) { ?>
+    <li><a href="?userfbid=<?php echo $new_user['fbid']; ?>" onClick="_gaq.push(['_trackEvent', 'navbar_new_users', 'link_click', '<?php echo $new_user['fbid']; ?>']);"><?php echo htmlentities(trim($new_user['name'])); ?><br /><small class="text-muted"><?php echo htmlentities(trim($new_user['fbname'])); ?></small></a></li>
+<?php } ?>
+</ul>

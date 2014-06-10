@@ -1,0 +1,29 @@
+<?php
+$predraw_email_notification = $facebook->notifyAdminsAboutPredraw($_POST['eventfbid']);
+$users = $facebook->getRandomUsers($_POST['eventfbid'], $_POST['limit']);
+?>
+<div class="alert alert-info">
+    <p>Os administradores deste aplicativo acabaram de ser notificados por e-mail que você entrou nesta seção.</p>
+    <p>Se você demorar a fechar o sorteio ou realizar várias tentativas de sorteio, eles saberão.</p>
+</div>
+<div class="container">
+<h2>O sorteio ainda não foi concluído...</h2>    
+<h3>Passo 1 - Confira os nomes a serem sorteados</h3>
+<details onClick="_gaq.push(['_trackEvent', 'sweepstake_details', 'details_click', '<?php echo $_POST['eventfbid']; ?>']);">
+<summary onClick="_gaq.push(['_trackEvent', 'sweepstake_details', 'summary_click', '<?php echo $_POST['eventfbid']; ?>']);">Verifique se os nomes estão todos corretos antes de clicar no botão de fechar sorteio.</summary>
+<?php include('views/admin-list-winners.phtml'); ?>
+</details>
+
+<h3>Passo 2 - Confirme o sorteio</h3>
+	<form class="alert alert-warning" method="post">
+		<input type="hidden" name="eventfbid" id="eventfbid" value="<?php echo htmlentities($_POST['eventfbid']); ?>" />
+<?php
+foreach($users as $user) {
+	echo '<input type="hidden" name="userfbids[]" id="userfbid_'. $user['fbid'] .'" value="'. $user['fbid'] .'">';
+}
+?>
+        <h4>Tudo certo com os nomes?</h4>
+        <p>Clique em <button class="btn btn-primary" type="submit" onClick="_gaq.push(['_trackEvent', 'sweepstake_details', 'finish_sweepstake', '<?php echo $_POST['eventfbid']; ?>']);">Concluir sorteio</button> para que o sorteio seja validado.</p>
+	</form>
+    
+</div>

@@ -1,0 +1,29 @@
+{
+	"name" : "armazemapp",
+	"description" : "App do Armazem do Rosario para Facebook",
+	"authors" : [{
+			"name" : "Paulo Henrique Andrade Mota Cristianismo",
+			"email" : "ti@ultracomunica.com.br",
+			"homepage" : "http://developer.jimmyandrade.com/",
+			"role" : "Developer"
+		}, {
+			"name" : "Daniel Assis Pinto Teixeira",
+			"email" : "web@ultracomunica.com.br",
+			"homepage" : "http://ultracomunica.com.br/",
+			"role" : "Executive Manager"
+		}
+	],
+	"keywords" : [
+		"facebook",
+		"app",
+		"armazem"
+	],
+	"homepage" : "https://github.com/jimmyandrade/armazemapp",
+	"minimum-stability" : "dev",
+	"support" : {
+		"email" : "ti@ultracomunica.com.br"
+	},
+	"autoload" : {
+		"psr-0" : { "armazemapp" : "src/" }
+	}
+}

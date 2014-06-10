@@ -1,0 +1,1 @@
+$('document').ready(function() {	$("img.lazy").show().lazyload({ effect : "fadeIn" });	$("[data-toggle=tooltip]").tooltip();	$('html').addClass( (top!=self) ? 'in-frame' : 'not-in-frame' );});

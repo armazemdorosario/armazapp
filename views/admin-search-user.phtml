@@ -1,0 +1,49 @@
+<?php $s = trim($_GET['s']); ?>
+<div class="container">
+	<header class="page-header">
+	<h1 class="col-xs-12 col-sm-8 col-md-10">
+		<?php echo htmlentities($s); ?>
+		<small>Resultados da busca</small>
+	</h1>
+	<a onClick="_gaq.push(['_trackEvent', 'back', 'default', 'to_home']);" class="btn btn-default btn-lg col-xs-12 col-sm-4 col-md-2" href="index.php" title="<?php echo _('Back to homepage'); ?>">
+		<span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Voltar
+	</a>
+	<div class="clear clearfix"></div>
+</header>
+<?php
+$users = $facebook->searchUser($s, false);
+$similar_users = $facebook->searchUser($s, true);
+#var_dump(count($users), count($similar_users));
+
+if($users) {
+	include 'views/admin-list-winners.phtml';
+}
+else {
+	if($similar_users) {
+?>
+<div class="alert alert-info">
+	<span class="label label-info">Hmmmm...</span>
+    Não encontramos ninguém com este nome exato, mas temos algumas sugestões de nomes para você:
+</div>
+<?php
+	}
+	else {
+?>
+<div class="alert alert-warning">
+	<h3>Não encontramos ninguém com esse nome... :(</h3>
+    <p>Por que não tenta pesquisar novamente?</p>
+</div>
+<?php
+	}
+}
+$users = &$similar_users;
+if($users) {
+?>
+<p>Confira alguns nomes parecidos com <?php echo $s; ?></p>
+<?php
+include 'views/admin-list-winners.phtml';
+}
+unset($similar_users);
+unset($users);
+?>
+</div>

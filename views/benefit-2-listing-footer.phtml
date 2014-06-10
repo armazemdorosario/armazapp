@@ -1,0 +1,8 @@
+﻿<footer>
+	<p>
+        <small>
+            Data do sorteio: <?php echo date('d\\/m H\\:i', strtotime($benefit['expiration_date'])); ?>.
+            <a href="/regulamento.php?eventfbid=<?php echo htmlentities($benefit['eventfbid']); ?>&benefit_type=2" target="_blank" onclick="window.open(this.href, 'regulamento', 'width=600, height=600'); _gaq.push(['_trackEvent', 'rules', 'popup_click', '<?php echo htmlentities($benefit['eventfbid']); ?>']); return false;">Regulamento</a>
+        </small>
+    </p>
+</footer>

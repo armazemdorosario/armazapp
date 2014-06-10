@@ -1,0 +1,63 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+    	<h2 class="panel-title">Cola em Mim</h2>
+    </div>
+    <div class="panel-body">
+<?php
+	$crush_matches = $facebook->getCrushMatches();
+	$crush_tips = $facebook->getCrushTips();
+	$crush_friends = $facebook->getCrushFriends();
+	
+	if(count($crush_matches)<1) {
+?>
+		<p>Nossos cupidos ainda não encontraram ninguém para você&hellip; :P</p>
+<?php
+	}
+	else {
+		if(count($crush_matches)==1) { echo '<h3>Vocês combinam! &lt3</h3>'; }
+		else { echo '<h3>Arrasando corações, hein? :O</h3>'; } 
+        
+	foreach($crush_matches as $match) {
+		echo '<a href="//facebook.com/' . $match['userfbid1'] . '" rel="external" title="'. $match['userfbname2'] .'" target="_blank">';
+		$facebook->getUserPicture($match['userfbid1'], '', 48, 'pull-left');
+		echo '</a>';
+		echo '<div class="pull-left"><br />&nbsp;&lt;3&nbsp;</div>';
+		echo '<a href="//facebook.com/' . $match['userfbid2'] . '" rel="external" title="'. $match['userfbname2'] .'" target="_blank">';
+		$facebook->getUserPicture($match['userfbid2'], '', 48);
+		echo '</a>';
+		echo '<div class="clearfix"></div>';
+	}
+	?>
+    <hr />
+    <?php if(count($crush_tips)>=1) { ?><h3>Vocês poderiam se falar... :P</h3><?php } ?>
+    <ul class="list-inline">
+    <?php
+    foreach($crush_tips as $match) {
+		echo '<li><a href="//facebook.com/' . $match['userfbid2'] . '" data-toggle="tooltip" rel="external" target="_blank" title="' . $match['userfname2'] . '">';
+		$facebook->getUserPicture($match['userfbid2'], '', 48);
+		echo '</a>';
+		echo '</li>';
+	}
+	?>
+	</ul>
+<?php
+}
+?>
+	<hr class="clearfix" />
+<?php if(count($crush_friends) > 0) { ?>
+	<h3>Vocês são amigos! *-*</h3>
+	<ul class="list-inline">
+	<?php
+    foreach($crush_friends as $match) {
+		echo '<li><a href="//facebook.com/' . $match['userfbid2'] . '" data-toggle="tooltip" rel="external" target="_blank" title="' . $match['userfname2'] . '">';
+		$facebook->getUserPicture($match['userfbid2'], '', 48);
+		echo '</a></li>';
+	}
+	?>
+	</ul>
+<?php } ?>
+	</div>
+    <div class="panel-footer">
+    Como usar? <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Use o botão 'Veja quem está participando' e marque a galera com 'Tô Afim', 'Amizade' ou 'Nem Pensar'. A pessoa não ficará sabendo... a menos que ela também queira colar em você :P"></span>
+    </div>
+</div>

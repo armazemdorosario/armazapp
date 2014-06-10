@@ -1,0 +1,76 @@
+<?php
+if(
+	isset($current_user['id']) &&
+	!empty($current_user['id']) &&
+	isset($current_user['name']) &&
+	!empty($current_user['name']) &&
+	$facebook->userfbidIsValid($current_user['id'])
+) {
+	?>
+<div class="alert alert-warning">
+	<p class="container">
+		<?php echo _('Before you continue to use the app, you need to confirm a few things...'); ?>
+	</p>
+</div>
+<form method="post" <?php echo 'role="form"'; ?> class="col-sm-6 col-sm-offset-3">
+	<fieldset class="row">
+		<legend class="col-sm-12">Antes de começar, faça seu cadastro</legend>
+		<div class="form-group">
+			<label class="sr-only" for="nome"><?php echo _('What is your full real name?'); ?></label>
+			<input
+				class="form-control"
+				id="nome"
+				maxlength="255"
+				name="nome"
+				placeholder="<?php echo _('Full name'); ?>"
+				required="required"
+				title="<?php echo _('Must be the real name, the one that is on ID card.'); ?>"
+				type="text"
+				value="<?php echo isset($_POST['nome']) ? $_POST['nome'] : ''; ?>"
+			/>
+			<?php if(isset($_POST) && isset($_POST['nome']) && strpos($_POST['nome'], ' ') == false) { ?>
+				<p class="alert alert-danger">Por favor, digite seu nome completo. <?php echo _('Must be the real name, the one that is on ID card.'); ?></p>
+			<?php } ?>
+			<?php if(isset($_POST) && isset($_POST['nome']) && $facebook->userAppearsToBeFake($facebook->calculateUserTrustLevel($_POST['nome'], $current_user['name']))) { ?>
+				<div class="alert alert-danger">
+					<p>Detectamos que o nome informado é muito diferente do nome do seu cadastro no Facebook.</p>
+					<p>Você entrou como <b><?php echo $current_user['name']; ?></b>.</p>
+					<p>Não é você? <a class="btn btn-danger" href="logout.php">Sair</a> e entrar com outro usuário.</p>
+				</div>
+			<?php } ?>
+		</div>
+		<div class="form-group">
+			<label class="sr-only" for="identidade"><?php echo _('What is the number of your ID card?'); ?></label>
+			<input
+				class="form-control"
+				id="identidade"
+				maxlength="28"
+				name="identidade"
+				placeholder="<?php echo _('Number of ID card'); ?>"
+				required="required"
+				title="<?php echo _('We ask for your ID card because we need to verify that you are really you'); ?> <?php echo _('This information will not appear to other people.'); ?>"
+				type="text"
+				value="<?php echo isset($_POST['identidade']) ? $_POST['identidade'] : ''; ?>"
+			/>
+		</div>
+		<div class="form-group">
+			<label class="control-label hidden-sm" for="submit">&nbsp;</label>
+			<button class="btn btn-lg btn-primary" id="signupUserSubmit" name="signupUserSubmit" type="submit">
+				<?php echo _('Finish my registration'); ?>
+			</button>
+			<p class="help-block">
+				<?php echo _('When finalizing your registration, you acknowledge that the above information is correct.'); ?>
+				<?php echo _('Your participation is subject to'); ?>
+				<a href="http://armazemdorosario.com.br/regulamento" onclick="_gaq.push(['_trackEvent', 'external', 'rules', 'from_user_signup']);" rel="external" target="_blank">
+					<?php echo _('regulation of'); ?>&nbsp;Armaz&eacute;m do Ros&aacute;rio
+				</a> e à nossa política de <a href="/privacy.php">privacidade</a>.
+			</p>
+		</div>
+	</fieldset>
+</form>
+<?php } else { ?>
+<form action="/logout.php" class="alert alert-warning">
+	<h3>Sua conta do Facebook não pode ser utilizada neste aplicativo.</h3>
+	<p><button class="btn btn-lg btn-danger" type="submit">Sair</button></p>
+</form>
+<?php } ?>

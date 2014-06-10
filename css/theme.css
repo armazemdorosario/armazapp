@@ -1,0 +1,1105 @@
+@CHARSET 'UTF-8';
+
+
+@font-face{font-family:'Novecento';src:url('../fonts/novecentowide-normal-webfont.eot');src:url('../fonts/novecentowide-normal-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/novecentowide-normal-webfont.woff') format('woff'), url('../fonts/novecentowide-normal-webfont.ttf') format('truetype'), url('../fonts/novecentowide-normal-webfont.svg#Novecento') format('svg');font-weight:normal;font-style:normal;}@font-face{font-family:'NovecentoBold';src:url('../fonts/novecentowide-bold-webfont.eot');src:url('../fonts/novecentowide-bold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/novecentowide-bold-webfont.woff') format('woff'), url('../fonts/novecentowide-bold-webfont.ttf') format('truetype'), url('../fonts/novecentowide-bold-webfont.svg#NovecentoBold') format('svg');font-weight:normal;font-style:normal;}
+
+
+body, h1, h2, h3, h4, h5, h6,
+
+
+.h1, .h2, .h3, .h4, .h5, .h6 {
+
+
+	font-family: Novecento, Helvetica, Arial, sans-serif;
+
+
+}
+
+
+
+
+
+body {
+	background-color: #FFFFFF;
+	margin-top: 55px;
+}
+
+
+body.login {
+	margin-top: 0px;
+	padding-top: 0px;
+}
+
+
+body footer#footer {
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+}
+
+
+
+
+
+header#header, footer#footer {
+	background-image: url('/images/bg.jpg');
+	background-position: center bottom;
+}
+
+
+
+
+
+header#header, footer#footer, nav#admin-navbar {
+
+
+	background-color: #000000;
+
+
+	color: #FFFFFF;
+
+
+	background-position: top;
+
+
+	background-repeat: repeat;
+	box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
+
+}
+
+
+
+
+
+header#header {
+
+
+	background-position: left 25%;
+
+
+}
+
+
+
+
+
+
+
+
+footer#footer {
+
+
+	background-color: #000000;
+
+
+	padding-top: 1em;
+
+
+	background-position: left 25%;
+
+
+}
+
+
+
+
+
+.lazy {
+    background-image: url('/images/l.gif');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: #FFFFFF;
+
+}
+
+
+
+
+
+header#header .page-header {
+	border-bottom: 0px none;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-top: 20px;
+}
+
+
+
+
+
+#login-box {
+
+
+	background-color: rgba(255, 255, 255, 0.9);
+
+
+	border-radius: 4px;
+
+
+	box-shadow:
+
+
+		rgb(222, 220, 221) 0px 5px 0px 0px,
+
+
+		rgba(0, 0, 0, 0.0980392) 0px 1px 14px 0px,
+
+
+		rgba(0, 0, 0, 0.0980392) 0px 8px 10px 0px;
+
+
+	color: rgb(0, 0, 0);
+
+
+	min-height: 320px;
+
+
+	max-height: 400px;
+
+
+	margin-top: 10px;
+
+
+	margin-bottom: 10px;
+
+
+	padding: 15px 0px;
+
+
+	text-shadow: rgba(255, 255, 255, 0.8) 1px 1px 0px;
+
+
+	text-align: center;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#login-box p, #login-box h1, #login-box h2, #login-box h3, #login-box h4, #login-box h5, #login-box h6 {
+
+
+
+
+
+
+
+
+	padding-left: 15px;
+
+
+
+
+
+
+
+
+	padding-right: 15px;
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#login-box img {
+
+
+
+
+
+
+
+
+	margin-top: 15px;
+
+
+
+
+
+
+
+
+	margin-bottom: 15px;
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.fb-login-button {
+
+
+
+
+
+
+
+
+  left: 0px;
+
+
+
+
+
+
+
+
+  top: 0px;
+
+
+
+
+
+
+
+
+  min-width: 100px;
+
+
+
+
+
+
+
+
+  min-height: 44px;
+
+
+
+
+
+
+
+
+  z-index: 24;
+
+
+
+
+
+
+
+
+  margin-top: 15px;
+
+
+
+
+
+
+
+
+  margin-bottom: 15px;
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.fb-login-button span {
+
+
+
+
+
+
+
+
+	font-size: 14px;
+
+
+
+
+
+
+
+
+	color: rgb( 255, 255, 255 );
+
+
+
+
+
+
+
+
+	font-weight: bold;
+
+
+
+
+
+
+
+
+  	line-height: 1.714;
+
+
+
+
+
+
+
+
+  	text-align: left;
+
+
+
+
+
+
+
+
+  	min-height: 12px;
+
+
+
+
+
+
+
+
+  	vertical-align: middle;
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.fb-login-button .login-text {
+
+
+
+
+
+
+
+
+  text-shadow: 0px -1px 0px rgb( 0, 0, 0 );
+
+
+
+
+
+
+
+
+  min-width: 42px;
+
+
+
+
+
+
+
+
+  z-index: 23;
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+.fb-login-button .facebook-logo {
+
+
+
+
+
+
+
+
+  background-image: url('../images/facebook-logo.png');
+
+
+
+
+
+
+
+
+  width: 20px;
+
+
+
+
+
+
+
+
+  height: 20px;
+
+
+
+
+
+
+
+
+  display: inline-block;
+
+
+
+
+
+
+
+
+  z-index: 22;
+
+
+
+
+
+
+
+
+  margin-right: 10px;
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+.fb-login-button .btn {
+
+
+
+
+
+
+
+
+  border-radius: 3px;
+
+
+
+
+
+
+
+
+  background-color: #3B5998;
+
+
+
+
+
+
+
+
+  box-shadow: 0px 2px 0px 0px rgba( 0, 0, 0, 0.2 );
+
+
+
+
+
+
+
+
+  min-width: 100px;
+
+
+
+
+
+
+
+
+  min-height: 44px;
+
+
+
+
+
+
+
+
+  display: inline-block;
+
+
+
+
+
+
+
+
+  z-index: 21;
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.fb-login-button .btn:hover {
+
+
+
+
+
+
+
+
+  border-radius: 3px;
+
+
+
+
+
+
+
+
+  background-color: #2F477A;
+
+
+
+
+
+
+
+
+  z-index: 3;
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+.strip {
+
+
+	overflow-y: hidden;
+
+
+}
+
+
+
+
+
+.strip header h1 a {
+
+
+	position: relative;
+
+
+	overflow: hidden;
+
+
+}
+
+
+
+
+
+.strip header h1 a:before {
+
+
+	text-transform: lowercase;
+
+
+	position: absolute;
+
+
+	color: #FFFFFF;
+
+
+	left: -90px;
+
+
+	top: 15px;
+
+
+	transform:rotate(-30deg);
+
+
+	-ms-transform:rotate(-30deg); /* IE 9 */
+
+
+	-webkit-transform:rotate(-30deg); /* Opera, Chrome, and Safari */
+
+
+	padding: 5px;
+
+
+	font-size: 20px;
+
+
+	text-align: center;
+
+
+	width: 300px;
+
+
+}
+
+
+
+
+
+.strip-participating header h1 a:before {
+
+
+	content: 'Participando';
+
+
+	background-color: #31708f;
+
+
+}
+
+.strip-youlose header h1 a:before {
+	content: 'Não ganhou';
+	background-color: #d9534f;
+}
+
+
+
+.strip-full header h1 a:before {
+
+
+	content: 'Lista cheia';
+
+
+	background-color: #d9534f;
+
+
+}
+
+.strip-promoters header h1 a:before {
+	content: 'Promoters';
+	background-color: #333333;
+}
+
+
+
+.strip-closed header h1 a:before {
+
+
+	content: 'Lista fechada';
+
+
+	background-color: #f0ad4e;
+
+
+}
+
+
+
+
+
+.strip-open header h1 a:before {
+
+
+	content: 'Lista aberta';
+
+
+	background-color: #5cb85c;
+
+
+}
+
+
+
+
+
+.unselectable, .unselectable * {
+
+
+	-moz-user-select: none; /* These user-select properties are inheritable, used to prevent text selection */
+
+
+    -webkit-user-select: none;
+
+
+    -ms-user-select: none; /* From IE10 only */
+
+
+    user-select: none; /* Not valid CSS yet, as of July 2012 */
+
+
+    -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
+
+
+    user-drag: none;
+
+
+	-webkit-touch-callout: none;
+
+
+}
+
+
+
+
+
+.switchery { box-sizing: content-box; }
+
+
+
+
+
+.small + .switchery {
+
+
+   height: 15px;
+
+
+   width: 25px;
+
+
+}
+
+
+
+
+
+.small + .switchery > small {
+
+
+   height: 15px;
+
+
+   width: 15px;
+
+
+}
+
+
+
+
+
+.img-circle.success {
+
+
+	box-shadow: 0px 0px 36px #5cb85c;
+
+
+}
+
+
+.img-circle.danger {
+
+
+	box-shadow: 0px 0px 36px #d9534f;
+
+
+}
+
+
+
+
+
+.alert, .navbar {
+
+
+	border-radius: 0px;
+
+
+	-webkit-border-radius: 0px;
+
+
+	-moz-border-radius: 0px;
+
+
+}
+
+
+
+
+
+article.has-progress-on-top {
+
+
+	position: relative;
+
+
+}
+
+
+article.has-progress-on-top .progress {
+	border-radius: 0px;
+
+	position: absolute;
+
+
+	top: 0px;
+
+
+	width: 100%;
+
+
+	z-index: 2;
+
+
+}
+
+img.circle {
+	opacity: 0.9;
+	transition: opacity 0.2s linear;
+}
+
+a:hover img.circle, img.circle:hover {
+	opacity: 1;
+}
+
+
+@media (max-width:768px){
+
+	.switchery {
+	   height: 15px !important;
+	   width: 25px !important;
+	}
+	
+	.switchery > small {
+	   height: 15px !important;
+	   width: 15px !important;
+	}
+
+}
+
+ul.has-crush ul, ul.has-crush .crush-current-status {
+	transition-duration: 0.3s;
+	transition-property: opacity;
+	transition-timing-function: ease-in-out;
+	-webkit-transition-duration: 0.2s;
+	-webkit-transition-property: all;
+	-webkit-transition-timing-function: ease-in-out;
+	z-index: 2;
+	text-align: center;
+}
+
+ul.has-crush li ul, ul.has-crush li .crush-current-status {
+	opacity: 0;
+	transform:scale(0,0);
+	-webkit-transform:scale(0,0);
+	display: block;
+	position: absolute;
+	bottom: 0px;
+	text-align: center;
+	margin: 0 auto;
+}
+ul.has-crush li:hover ul, ul.has-crush li .crush-current-status {
+	opacity: 1;
+	transform:scale(1,1);
+	-webkit-transform:scale(1,1);
+}
+ul.has-crush li:hover .crush-current-status {
+	opacity: 0;
+	transform:scale(0,0);
+	-webkit-transform:scale(0,0);
+}
+
+ul.has-crush li ul li,
+ul.has-crush li:hover ul li a,
+ul.has-crush .crush-current-status a {
+	width: 37.5px;
+	height: 37.5px;
+}
+
+ul.has-crush li:hover ul li a,
+.crush-current-status .crush-0,
+.crush-current-status .crush-1,
+.crush-current-status .crush-2 {
+	display: inline-block;
+	background-image: url('/images/crush-sprites.png');
+	background-repeat: no-repeat;
+	overflow: hidden;
+	border-radius: 100%;
+	transition-duration: 0.1s;
+	transition-property: all;
+	transition-timing-function:ease-in-out;
+}
+
+ul.has-crush li:hover ul li a:hover,
+ul.has-crush li .crush-current-status a:hover {
+	transform:scale(1.25,1.25);
+	-webkit-transform:scale(1.25,1.25);
+}
+
+.crush-current-status {
+	left: 50%;
+}
+.crush-current-status a {
+	margin-left: -15px;
+}
+
+ul.has-crush .crush-0, .crush-current-status a.crush-0 {
+	background-position: right center;
+}
+ul.has-crush .crush-1, .crush-current-status a.crush-1 {
+	background-position: center center;
+}
+ul.has-crush .crush-2, .crush-current-status a.crush-2 {
+	background-position: left center;
+}
+
+@media (min-width:1200px) {
+	ul.has-crush li ul {
+		padding-left: 15%;
+	}
+}
+
+input[type=text], input[type=email], input[type=url], input[type=phone], textarea {
+	
+}
+
+::-webkit-input-placeholder {
+	color: #FFFFFF;
+}
+
+:-moz-placeholder {
+	color: #FFFFFF;
+}
+
+::-moz-placeholder {
+	color: #FFFFFF;
+}
+
+:-ms-input-placeholder {
+	color: #FFFFFF;
+}

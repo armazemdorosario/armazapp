@@ -1,0 +1,11 @@
+<header>
+	<h1 class="h4">
+    	<a onClick="_gaq.push(['_trackEvent', 'external', 'header_link_click', '<?php echo $benefit['eventfbid']; ?>']);" href="//facebook.com/<?php echo $benefit['eventfbid']; ?>" rel="external" target="_blank" title="<?php echo htmlentities($fbevent['name']); ?>">
+			<time datetime="<?php echo date('y\\-m\\-d H\\:i', strtotime($fbevent['start_time'])); ?>">
+				<?php echo date('d\\/m', strtotime($fbevent['start_time'])); ?>
+            </time>
+            <strong><?php echo htmlentities($fbevent['name']); ?></strong>
+		</a>
+	</h1>
+    <p><img alt="<?php echo htmlentities($fbevent['name']); ?>, <?php echo date('d\\/m H\\:i', strtotime($fbevent['start_time'])); ?>" class="img-responsive" src="https://images.weserv.nl/?url=<?php echo str_replace('http://', '', $benefit['photo']); ?>" /></p>
+</header>

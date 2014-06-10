@@ -1,0 +1,45 @@
+<header id="header">
+	<div class="clear clearfix"></div>
+	<div class="container page-header">
+        <a class="col-xs-5 col-sm-2 col-md-2" href="?userfbid=<?php echo $user['id']; ?>" data-placement="bottom" data-toggle="tooltip" title="Uau, que gat<?php echo $facebook->g(); ?>! :P">
+        <?php
+        $class = ($facebook->canClaimBenefits($user['id'])) ? 'success' : 'danger';
+        $facebook->getUserPicture($user['id'], $user['name'], 100, $class);
+        ?>
+        <span class="label label-info" style="position: absolute; bottom: 0px; left: 33.33px;">
+            <span class="glyphicon glyphicon-hand-up"></span>
+            <?php echo _("It's you!"); ?>
+        </span>
+        </a>
+        <h3 class="hidden-xs col-sm-7 col-md-8">
+            <?php echo $facebook->g(_('Welcome [female]'), _('Welcome [male]'), _('Welcome [generic]')); ?>,<br />
+            <?php echo htmlspecialchars($user['name']); ?>!
+        </h3>
+        <h4 class="visible-xs col-xs-7">
+        	Oi, <?php echo htmlspecialchars($user['first_name']); ?>!
+        </h4>
+		<div class="clear clearfix"></div>
+	</div>
+	<div class="clear clearfix"></div>
+</header>
+<?php if($facebook->userSignedUp()) { ?>
+	<?php if($facebook->canClaimBenefits($user['id'])) { ?>
+    	<div class="alert alert-info">
+    		<p class="container">
+                <strong class="label label-info">Parabéns!</strong>
+                <small>Você não faltou nenhuma vez aos eventos nos quais ganhou ingressos.</small>
+                <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="As pessoas que faltarem a algum evento não poderão participar de Listas VIP ou sorteios durante 15 dias">&nbsp;</span>
+    		</p>
+    	</div>
+    <?php } else { ?>
+    	<div class="alert alert-danger">
+    		<p class="container">
+    			<strong class="label label-danger">Ops!</strong>
+    			Você faltou ao último evento no qual ganhou ingresso.<br />
+    			<small>As pessoas que faltarem a algum evento não poderão participar de Listas VIP ou sorteios num intervalo de <strong>15</strong> dias.</small>
+    		</p>
+    	</div>
+    <?php } // end if user can claim benefits ?>
+<?php } // end if user signed up ?>
+<div class="clear clearfix"></div>
+<?php echo '<div class="container">'; ?>

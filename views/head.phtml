@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="pt-br" <?php echo 'itemscope itemtype="http://schema.org/SoftwareApplication"'; ?>>
+<head>
+    <meta charset="utf-8" />
+    <title>Armazapp</title>
+    <meta name="title" content="Armazapp" />
+    <meta name="description" content="Com o nosso aplicativo, voc&eacute; pode participar de listas VIP e confirmar presen&ccedil;a em eventos da casa. Experimente e conte pra galera!" />
+    <?php
+    echo '
+	<meta itemprop="description" content="Com o nosso aplicativo, voc&eacute; pode participar de listas VIP e confirmar presen&ccedil;a em eventos da casa. Experimente e conte pra galera!" />
+    <meta itemprop="datePublished" datetime="2014-12-28" />
+	';?>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/theme.css">
+<?php
+$open_graph_array = $facebook->openGraphMeta;
+if($open_graph_array && isset($open_graph_array) && count($open_graph_array)>0) {
+	foreach($open_graph_array as $key=>$value) {
+?>
+    	<meta content="<?php echo trim($value); ?>" name="<?php echo htmlentities($key) ?>" <?php echo 'property="'. htmlentities($key) . '"'; ?> />
+<?php
+	}
+}
+?>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="msapplication-TileColor" content="#000000" />
+    <meta name="msapplication-TileImage" content="http://armazemdorosario.com.br/apple-touch-icon-144x144-precomposed.png" />
+	<link rel="apple-touch-icon" sizes="144x144" href="http://armazemdorosario.com.br/apple-touch-icon-144x144-precomposed.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="http://armazemdorosario.com.br/apple-touch-icon-114x114-precomposed.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="http://armazemdorosario.com.br/apple-touch-icon-72x72-precomposed.png">
+	<link rel="apple-touch-icon" href="http://armazemdorosario.com.br/apple-touch-icon-precomposed.png">
+    <!--[if IE]><link rel="shortcut icon" href="http://armazemdorosario.com.br/favicon.ico"><![endif]-->
+    <link rel="favicon" href="//fbcdn-photos-b-a.akamaihd.net/hphotos-ak-prn1/t39.2081-0/p128x128/851590_240718916089300_1733288286_n.png" />
+    <link rel="icon" href="http://armazemdorosario.com.br/favicon-16.png" sizes="16x16">
+	<link rel="icon" href="http://armazemdorosario.com.br/favicon-32.png" sizes="32x32">
+	<link rel="icon" href="http://armazemdorosario.com.br/favicon-48.png" sizes="48x48">
+	<link rel="icon" href="http://armazemdorosario.com.br/favicon-64.png" sizes="64x64">
+	<link rel="icon" href="http://armazemdorosario.com.br/favicon-128.png" sizes="128x128">
+    <link rel="image_src" href="//fbcdn-photos-b-a.akamaihd.net/hphotos-ak-prn1/t39.2081-0/p128x128/851590_240718916089300_1733288286_n.png" />
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.70/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <script data-cfasync="false" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script data-cfasync="false" src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<script data-cfasync="false" src="js/modernizr.js"></script>
+    <script type="text/javascript">
+    <!--
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42659029-6']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        // ga.src = 'https://stats.g.doubleclick.net/dc.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	-->
+	</script>
+</head>
+<body
+	<?php echo isset($body_classes) ? 'class="'.$body_classes.'"' : ''; ?>
+	<?php echo ($facebook && isset($facebook) && $facebook->isCanvas()) ? 'id="canvas"' : 'id="website"'; ?>
+>
+<div id="fb-root"></div>
+<?php
+echo('<div id="wrap">');
+flush();
