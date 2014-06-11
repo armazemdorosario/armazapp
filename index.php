@@ -70,11 +70,8 @@ if(isset($_POST)) {
 		}		
 
 		$notification_data = array(
-
 			'template' => 'Você está participando do sorteio de ingressos ' .$eventname,
-
 			'href' => '?utm_source=facebook&utm_medium=ticket_sweepstakes_notification',
-
 		);
 
 		$facebook->sendNotification($notification_data);
@@ -162,39 +159,7 @@ if(!$facebook->checkPermission('publish_stream') || !$facebook->checkPermission(
 </div>
 <?php
 }
-			echo '<div class="clearfix"></div><main>';
-?>
-
-<div class="row">
-    <div class="col-sm-6">
-    	<div class="panel panel-default">
-    		<div class="panel-heading">
-	    		<h2 class="panel-title">Sorteios</h2>
-	    	</div>
-	        <div class="list-group">
-			<?php include_once 'views/listagem-de-sorteios.phtml'; ?>
-	        </div>
-	        <div class="panel-footer">
-	        </div>
-        </div>
-        <?php include_once 'views/crush-panel.phtml'; ?>
-	</div>
-	<div class="col-sm-6">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-    			<h2 class="panel-title">Listas VIP</h2>
-    		</div>
-        	<div class="list-group">
-				<?php include_once 'views/listagem-de-eventos.phtml'; ?>
-        	</div>
-        	<div class="panel-footer">
-        	</div>
-        </div>
-	</div>
-</div>
-<div class="clearfix"></div>
-<?php	
-			echo '</main>';
+			include_once 'views/main-layout.phtml';
 		}
 	}
 	else {

@@ -8,21 +8,22 @@ use armazemapp\PDOAdapter;
  * @author Paulo H. (Jimmy) Andrade Mota C.
  *        
  */
-class EventTable {
+class EventTable
+{
 	
-	protected $tableGateway;
+	protected $tableGateway_;
 	
 	public function __construct() {
-		$this->tableGateway = new PDOAdapter();
+		$this->tableGateway_ = new PDOAdapter();
 	}
 	
 	public function fetchAll() {
-		$resultSet = $this->tableGateway->query('SELECT * FROM `events` WHERE 1;');
+		$resultSet = $this->tableGateway_->query('SELECT * FROM `events` WHERE 1;');
 		return $resultSet;
 	}
 	
 	public function getEvent( $event_fbid ) {
-		$rowset = $this->tableGateway->query("SELECT * FROM `events` WHERE `event_fbid` = '$event_fbid';");
+		$rowset = $this->tableGateway_->query("SELECT * FROM `events` WHERE `event_fbid` = '$event_fbid';");
 		$row = $rowset->fetch();
 		if ( !$row ) {
 			throw new \Exception("Could not find event with ID $event_fbid");
@@ -44,7 +45,7 @@ class EventTable {
 		}
 		else {
 			if( $this->getEvent( $event_fbid ) ) {
-				$this->tableGateway->exec( "
+				$this->tableGateway_->exec( "
 						UPDATE `events`
 						SET `event_fbname` = '{$data['event_fbname']}',
 							`start_date` = '{$data['start_date']}', 
@@ -61,7 +62,7 @@ class EventTable {
 	}
 	
 	public function deleteEvent( $event_fbid ) {
-		$this->tableGateway->exec( "DELETE FROM `events` WHERE `event_fbid` = '$event_fbid' LIMIT 1;" );
+		$this->tableGateway_->exec( "DELETE FROM `events` WHERE `event_fbid` = '$event_fbid' LIMIT 1;" );
 	}
 	
 }

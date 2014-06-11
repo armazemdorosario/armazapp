@@ -1,54 +1,88 @@
-<nav id="admin-navbar" class="navbar navbar-fixed-top navbar-inverse" <?php echo 'role="navigation"'; ?>>
+<nav id="admin-navbar" class="navbar navbar-fixed-top navbar-inverse"
+	<?php echo 'role="navigation"'; ?>>
 	<div class="container">
-    	<div class="navbar-header">
-        	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" onClick="_gaq.push(['_trackEvent', 'admin_navbar', 'toggle', 'button']);">
-            	<span class="sr-only"><?php echo _('Toggle navigation'); ?></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#bs-example-navbar-collapse-1"
+				onClick="_gaq.push(['_trackEvent', 'admin_navbar', 'toggle', 'button']);">
+				<span class="sr-only"><?php echo _('Toggle navigation'); ?></span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/" <?php echo 'itemprop="url"'; ?> onClick="_gaq.push(['_trackEvent', 'navbar', 'click', 'brand_logo']);" title="O aplicativo do Armazém do Rosário">
-             	<img alt="Armazapp" src="https://fbcdn-photos-e-a.akamaihd.net/hphotos-ak-prn1/t39.2081-0/851584_240718672755991_1796873575_n.png" height="16" width="16" />
-                &nbsp;app
+			<a class="navbar-brand" href="/" <?php echo 'itemprop="url"'; ?>
+				onClick="_gaq.push(['_trackEvent', 'navbar', 'click', 'brand_logo']);"
+				title="O aplicativo do Armazém do Rosário"> <img alt="Armazapp"
+				src="https://fbcdn-photos-e-a.akamaihd.net/hphotos-ak-prn1/t39.2081-0/851584_240718672755991_1796873575_n.png"
+				height="16" width="16" /> &nbsp;app
 			</a>
-		</div><!-- /.navbar-header -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <?php if ($facebook && isset($facebook) && ($facebook->userIsAdmin() || $facebook->userIsPromoter())) { ?>
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="/admin.php" onClick="_gaq.push(['_trackEvent', 'navbar', 'click', 'admin_wrench']);" title="Administração">
-                            <span class="visible-sm">
-                            	<span class="glyphicon glyphicon-cog"></span>
-                            </span>
-                            <span class="hidden-sm">
-                            	<span class="glyphicon glyphicon-cog"></span>&nbsp;Administração
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-                <form class="navbar-form navbar-left" action="/admin.php" <?php echo 'role="search"'; ?>>
-                    <fieldset class="form-group pull-left">
-                        <input type="search" class="form-control" id="s" name="s" placeholder="Pesquisar usuários..." value="<?php echo isset($_GET['s']) ? htmlentities(trim($_GET['s'])) : ''; ?>">
-                    </fieldset>
-                    <button type="submit" class="btn btn-default hidden-xs hidden-sm" onClick="_gaq.push(['_trackEvent', 'navbar_form', 'search_submit', 'default']);">Ir</button>
-                    <div class="clearfix"></div>
-                </form>
+		</div>
+		<!-- /.navbar-header -->
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+            <?php if ($facebook && isset($facebook) && $facebook->userIsAdministrator()) { ?>
+            <ul class="nav navbar-nav">
+				<li><a href="/admin.php"
+					onClick="_gaq.push(['_trackEvent', 'navbar', 'click', 'admin_wrench']);"
+					title="Administração"> <span class="visible-sm"> <span
+							class="glyphicon glyphicon-cog"></span>
+					</span> <span class="hidden-sm"> <span
+							class="glyphicon glyphicon-cog"></span>&nbsp;Administração
+					</span>
+				</a></li>
+			</ul>
+			<?php } ?>
+			
+			<?php if ($facebook && isset($facebook) && $facebook->userIsPromoter()) { ?>
+            <ul class="nav navbar-nav">
+				<li><a href="/promoter.php"
+					onClick="_gaq.push(['_trackEvent', 'navbar', 'click', 'promoter_wrench']);"
+					title="Promoter"> <span class="visible-sm"> <span
+							class="glyphicon glyphicon-cog"></span>
+					</span> <span class="hidden-sm"> <span
+							class="glyphicon glyphicon-cog"></span>&nbsp;Promoter
+					</span>
+				</a></li>
+			</ul>
+            <?php } ?>
+			
+			<?php if ($facebook && isset($facebook) && ($facebook->userIsAdministrator() || $facebook->userIsPromoter())) { ?>
+			<form class="navbar-form navbar-left" action="/admin.php"
+				<?php echo 'role="search"'; ?>>
+				<fieldset class="form-group pull-left">
+					<input type="search" class="form-control" id="s" name="s"
+						placeholder="Pesquisar usuários..."
+						value="<?php echo isset($_GET['s']) ? htmlentities(trim($_GET['s'])) : ''; ?>">
+				</fieldset>
+				<button type="submit" class="btn btn-default"
+					onClick="_gaq.push(['_trackEvent', 'navbar_form', 'search_submit', 'default']);">Ir</button>
+				<div class="clearfix"></div>
+			</form>
             <?php } // end if user is admin or promoter ?>
+            
             <div class="navbar-right">
-                <ul class="nav navbar-nav">
+				<ul class="nav navbar-nav">
                 	<?php if(isset($current_user['id']) && !empty($current_user['id'])) { ?>
-                    <li>
-                        <a href="/?userfbid=<?php echo $current_user['id']; ?>" onClick="_gaq.push(['_trackEvent', 'you', 'link_click', '<?php echo $current_user['id']; ?>']);" title="Veja seu registro de atividades" data-toggle="tooltip" data-placement="bottom">
-                        	 <span class="pull-left"><?php $facebook->getUserPicture($current_user['id'], $current_user['name'], 24); ?></span>&nbsp;<?php echo $current_user['first_name']; ?><span class="clearfix"></span>
-                        </a>
-                    </li>
+                    <li><a
+						href="/?userfbid=<?php echo $current_user['id']; ?>"
+						onClick="_gaq.push(['_trackEvent', 'you', 'link_click', '<?php echo $current_user['id']; ?>']);"
+						title="Veja seu registro de atividades" data-toggle="tooltip"
+						data-placement="bottom"> <span class="pull-left"><?php $facebook->getUserPicture($current_user['id'], $current_user['name'], 24); ?></span>&nbsp;<?php echo $current_user['first_name']; ?><span
+							class="clearfix"></span>
+					</a></li>
                     <?php } ?>
                     <li><a href="/privacy.php" target="_top">Privacidade</a></li>
-                </ul>
-                <form action="/logout.php" class="nav navbar-form navbar-right" method="get" target="_top">
-                    <button class="btn btn-danger" type="submit" title="Sair da administração e do aplicativo" onClick="_gaq.push(['_trackEvent', 'logout', 'submit', 'button']);">Sair</button>
-                </form>
-            </div><!-- /.navbar-right -->
-        </div><!-- /#bs-example-navbar-collapse-1 -->
-	</div><!-- /.container -->
-</nav><!-- /#admin-navbar -->
+				</ul>
+				<form action="/logout.php" class="nav navbar-form navbar-right"
+					method="get" target="_top">
+					<button class="btn btn-danger" type="submit"
+						title="Sair da administração e do aplicativo"
+						onClick="_gaq.push(['_trackEvent', 'logout', 'submit', 'button']);">Sair</button>
+				</form>
+			</div>
+			<!-- /.navbar-right -->
+		</div>
+		<!-- /#bs-example-navbar-collapse-1 -->
+	</div>
+	<!-- /.container -->
+</nav>
+<!-- /#admin-navbar -->

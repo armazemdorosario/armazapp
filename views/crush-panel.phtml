@@ -1,8 +1,9 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
-    	<h2 class="panel-title">Cola em Mim</h2>
+    	<h2 class="panel-title"><span class="pull-right">Como usar? <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Use o botão 'Veja quem está participando' e marque a galera com 'Tô Afim', 'Amizade' ou 'Nem Pensar'. A pessoa não ficará sabendo... a menos que ela também queira colar em você :P"></span></span> Cola em Mim</h2>
     </div>
     <div class="panel-body">
+    	<div class="col-xs-12 col-sm-4 col-lg-12">
 <?php
 	$crush_matches = $facebook->getCrushMatches();
 	$crush_tips = $facebook->getCrushTips();
@@ -28,8 +29,9 @@
 		echo '<div class="clearfix"></div>';
 	}
 	?>
-    <hr />
-    <?php if(count($crush_tips)>=1) { ?><h3>Vocês poderiam se falar... :P</h3><?php } ?>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-lg-12">
+    <?php if(count($crush_tips)>=1) { ?><h3>Rolou um clima... :P</h3><?php } ?>
     <ul class="list-inline">
     <?php
     foreach($crush_tips as $match) {
@@ -43,9 +45,10 @@
 <?php
 }
 ?>
-	<hr class="clearfix" />
+	</div>
+	<div class="col-xs-12 col-sm-4 col-lg-12">
 <?php if(count($crush_friends) > 0) { ?>
-	<h3>Vocês são amigos! *-*</h3>
+	<h3>Só na amizade :D</h3>
 	<ul class="list-inline">
 	<?php
     foreach($crush_friends as $match) {
@@ -56,8 +59,8 @@
 	?>
 	</ul>
 <?php } ?>
+</div>
 	</div>
     <div class="panel-footer">
-    Como usar? <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Use o botão 'Veja quem está participando' e marque a galera com 'Tô Afim', 'Amizade' ou 'Nem Pensar'. A pessoa não ficará sabendo... a menos que ela também queira colar em você :P"></span>
     </div>
 </div>

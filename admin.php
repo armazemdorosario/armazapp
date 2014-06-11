@@ -13,7 +13,19 @@ if(!$current_user_is_admin && $current_user_access_level!=1) {
 }
 $body_classes = 'admin';
 include_once 'views/head.phtml';
+
 echo '<main class="container">';
+if ($facebook && isset($facebook) && $facebook->userIsAdministrator()) {
+?>
+<header class="page-header">
+	<h1>Painel de administração do app</h1>
+</header>
+<form action="/add-benefit.php">
+	<button class="btn btn-primary" role="button" type="submit">Adicionar benef&iacute;cio</button>
+</form>
+<hr />
+<?php
+}
 if(isset($_GET) && isset($_GET['s'])) {
 	include 'views/admin-search-user.phtml';
 }
@@ -55,8 +67,7 @@ if(isset($_POST) && isset($_POST['eventfbid']) && !isset($_POST['delete']) && !i
 	else {
 		include 'views/admin-pre-draw.phtml';
 	} // end if
-} // end if
-else {
+} else {
 	if(!isset($_GET['s']) && !isset($_GET['userfbid'])) {
 ?>
 <h2>Listas VIP</h2>

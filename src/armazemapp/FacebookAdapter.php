@@ -18,7 +18,8 @@ require_once 'vendor/facebook-php-sdk/src/facebook.php';
  * @todo Desacoplar funções
  *
  */
-class FacebookAdapter {
+class FacebookAdapter
+{
 	
 	/**
 	 * Armazena as configurações do aplicativo, como ID do app e segredo
@@ -361,13 +362,70 @@ class FacebookAdapter {
 	 * @return boolean|Ambigous <string, PDOStatement>
 	 */
 	public static function addEvent($data) {
-		$statement = "INSERT INTO `events` (`fbid`, `limite`, `participantes`, `genero`) VALUES ('{$data['fbid']}', '{$data['limite']}', 0, '{$data['genero']}');";
-		$query = static::$db->query($statement);
-		if(!$query) {
+		
+		if(!isset($data['eventfbid']) || empty($data['eventfbid'])) {
+			throw new Exception('Event FBID missing');
+		}
+		else {
+			$data['eventfbid'] = trim($data['eventfbid']);
+		}
+		
+		if(!isset($data['expiration_date']) || empty($data['expiration_date'])) {
+			throw new Exception('Benefit expiration date missing');
+		}
+		else {
+			$data['expiration_date'] = trim($data['expiration_date']);
+		}
+		
+		if(!isset($data['max_num_people_chosen']) || empty($data['max_num_people_chosen'])) {
+			throw new Exception('Benefit max num people missing');
+		}
+		else {
+			$data['max_num_people_chosen'] = intval($data['max_num_people_chosen']);
+		}
+		
+		$data['accepted_gender'] = !isset($data['accepted_gender']) && empty($data['accepted_gender']) ? '' : trim($data['accepted_gender']);
+		switch ($data['accepted_gender']) {
+			case 'female': case 'FEMALE': $data['accepted_gender'] = 'female'; break;
+			case 'male': case 'MALE': $data['accepted_gender'] = 'male'; break;
+			default: $data['accepted_gender'] = ''; break;
+		}
+		
+		$data['benefit_type'] = !isset($data['benefit_type']) && empty($data['benefit_type']) ? 1 : intval($data['accepted_gender']);
+		switch ($data['benefit_type']) {
+			case 2: $data['benefit_type'] = 2; break;
+			default: $data['benefit_type'] = 1; break;
+		}
+		
+		$data['featured'] = !isset($data['featured']) && empty($data['featured']) ? 0 : intval($data['featured']);
+		switch ($data['featured']) {
+			case 1: $data['featured'] = 1; break;
+			default: $data['featured'] = 0; break;
+		}
+		
+		$data['status'] = !isset($data['status']) && empty($data['status']) ? 0 : intval($data['status']);
+		switch ($data['status']) {
+			case 0: case 1: case 2: case 3: $data['status'] = intval($data['status']); break;
+			default: $data['status'] = 0; break;
+		}
+		
+		$data['photo'] = trim($data['photo']);
+		
+		$statement = "INSERT INTO `benefits` (
+		`accepted_gender`, `benefit_type`, `eventfbid`, `expiration_date`, `featured`,
+		`max_num_people_chosen`, `num_people_chosen`, `num_people_claimed`, `object`,
+		`photo`, `status`) VALUES (
+		'{$data['accepted_gender']}', '{$data['benefit_type']}', '{$data['eventfbid']}',
+		'{$data['expiration_date']}', '{$data['featured']}', '{$data['max_num_people_chosen']}', 
+		'0', '0', '1', '{$data['photo']}', '{$data['status']}');";
+		
+		$stmt = static::$db->exec($statement);
+		
+		if(!$stmt) {
 			error_log('N&atilde;o foi poss&iacute;vel cadastrar o evento. Verifique a consulta: ' . $statement);
 			return false;
 		}
-		return $query;
+		return $stmt;
 	}
 
 	/**
@@ -408,17 +466,22 @@ class FacebookAdapter {
 	 */
 	public static function getCurrentBenefits($benefit_type = null, $status = null) {
 		$statement = "SELECT * FROM `benefits` JOIN `benefits_object` ON `benefits_object`.`idobject` = `benefits`.`object` WHERE ";
-		$statement .= "`status` <> '0' AND ";
+		$statement .= "`status` <> '0'";
 
 		if(!is_null($benefit_type) && intval($benefit_type) > 0) {
 			$benefit_type = intval($benefit_type);
-			$statement .= "`benefit_type` = '{$benefit_type}'";
+			$statement .= " AND `benefit_type` = '{$benefit_type}'";
 		}
-		else {
-			$statement .= '1';
+		
+		if(!is_null($status)) {
+			$status = intval($status);
+			$statement .= " AND `status` = '{$status}'";
 		}
+		
 		$statement .= ' ORDER BY `featured` DESC, `expiration_date` ASC';
+		
 		return static::$db->query($statement);
+		
 	} // end function getCurrentBenefits
 
 	/**
@@ -1365,8 +1428,51 @@ WHERE (
 	 * @param	string $eventfbid ID do evento.
 	 * @return	Ambigous <string, PDOStatement> Listagem dos promoters e suas estatísticas.
 	 */
-	public static function getPromotersStats($eventfbid) {
-		return static::$db->query("SELECT * FROM `vw_promoters_stats` WHERE `eventfbid` = '$eventfbid';");
+	public static function getPromotersStats($eventfbid = null, $divide_by_gender = false) {
+
+		if($divide_by_gender) {
+			$statement = "SELECT * FROM `vw_promoters_gender_stats`";
+		}
+		else {
+			$statement = "SELECT * FROM `vw_promoters_stats`";
+		}
+
+		if( !is_null( $eventfbid ) ) {
+			$eventfbid = trim($eventfbid);
+			$statement .= " WHERE `eventfbid` = '$eventfbid'";
+		}
+		$statement .= ";";
+		return static::$db->query($statement);
+	}
+	
+	public static function getPromoterStats($userfbid = null) {
+		$userfbid = is_null($userfbid) ? static::$user_profile['id'] : $userfbid;
+		$statement = "SELECT * FROM `vw_promoters_stats`";
+		if ( !is_null( $userfbid ) ) {
+			$promoterfbid = trim($promoterfbid);
+			$statement .= " WHERE `chosen_by_fbid` = '$userfbid'";
+		}
+		$statement .= ";";
+		return static::$db->query($statement);
+	}
+	
+	public static function getBenefitUsersByPromoter($userfbid = null, $eventfbid = null, $fbgender = null) {
+		$userfbid = is_null($userfbid) ? static::$user_profile['id'] : $userfbid;
+		$statement = "SELECT * FROM `vw_users_benefits`";
+		if ( !is_null( $userfbid ) ) {
+			$promoterfbid = trim($promoterfbid);
+			$statement .= " WHERE `chosen_by_fbid` = '$userfbid'";
+		}
+		if( !is_null( $eventfbid ) ) {
+			$eventfbid = trim($eventfbid);
+			$statement .= " AND `eventfbid` = '$eventfbid'";
+		}
+		if( !is_null( $fbgender ) ) {
+			$fbgender = trim($fbgender);
+			$statement .= " AND `fbgender` = '$fbgender'";
+		}
+		$statement .= ";";
+		return static::$db->query($statement);
 	}
 	
 	/**
