@@ -7,6 +7,7 @@ configs/*
 config/*
 error_log*
 templates_c/
+cache/
 
 /coverage/
 vendor/
