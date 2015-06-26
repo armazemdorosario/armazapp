@@ -1085,7 +1085,7 @@ ul.has-crush .crush-2, .crush-current-status a.crush-2 {
 }
 
 input[type=text], input[type=email], input[type=url], input[type=phone], textarea {
-	
+	font-family: Helvetica, Arial, sans-serif;
 }
 
 ::-webkit-input-placeholder {

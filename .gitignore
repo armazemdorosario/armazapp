@@ -1,12 +1,16 @@
+.env
 .ftpquota
 *.LCK
 _notes
 dwsync.xml
 configs/*
+config/*
 error_log*
+templates_c/
 
 /coverage/
 vendor/
+bower_components/
 composer.lock
 composer.phar
 .DS_Store

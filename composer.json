@@ -19,11 +19,28 @@
 		"armazem"
 	],
 	"homepage" : "https://github.com/jimmyandrade/armazemapp",
-	"minimum-stability" : "dev",
 	"support" : {
 		"email" : "ti@ultracomunica.com.br"
 	},
 	"autoload" : {
-		"psr-0" : { "armazemapp" : "src/" }
-	}
+		"psr-0" : { "Eventzapp" : "src/" },
+        "psr-4": {
+        	"Benefit\\": "src/Benefit/",
+        	"BenefitObject\\": "src/BenefitObject/",
+        	"BenefitType\\": "src/BenefitType/",
+        	"User\\": "src/User/",
+        	"UserBenefit\\": "src/UserBenefit/",
+        	"UserCrush\\": "src/UserCrush/",
+        	"UserStats\\": "src/UserStats/"
+        }
+	},
+    "require": {
+        "facebook/php-sdk-v4" : "4.0.*",
+        "jimmyandrade/japhpy": "~1.0",
+        "mandrill/mandrill": ">=1.0.0",
+        "slim/slim": ">=2.6.2",
+        "smarty/smarty": ">=3.1.24",
+        "smarty-gettext/smarty-gettext": "~1.1.1",
+        "vlucas/phpdotenv" : ">=1.1.0"
+    }
 }
