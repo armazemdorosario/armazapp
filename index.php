@@ -24,9 +24,9 @@ catch(\Eventzapp\Exception $ex) {
 		case 83:
 		case 86:
 			session_destroy();
-			echo htmlentities('Não estamos conseguindo nos conectar com o danado do Facebook... Dê uma atualizada na página e tente de novo.');
+			echo htmlentities('Nossa equipe já foi informada do biziu... Por favor, dê uma atualizada na página e tente de novo ou volte mais tarde.');
 			break;
-		
+
 		default:
 			Debugger::log('App response: ' . $ex->get);
 			break;

@@ -1,6 +1,8 @@
+<ifModule mod_rewrite.c>
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [QSA,L]
+</ifModule>
 
 <files README.md>
  order allow,deny

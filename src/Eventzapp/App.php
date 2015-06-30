@@ -45,26 +45,33 @@ class App {
 			$this->engine->assign('env', getenv('ENV'));
 		}
 		catch(\Exception $exception) {
-			Debugger::log('While instantiating the app class: ' . $exception->getMessage() . $exception->getCode());
+			switch($exception->getCode()) {
+				case 1049:
+					Debugger::log('Seems like you did not configure the database server: ' . $exception->getMessage());
+					break;
+				default:
+					Debugger::log('While instantiating the app class: ' . $exception->getMessage() . $exception->getCode());
+					break;
+			} // end switch
 		}
 		catch(Facebook\FacebookSDKException $exception) {
 			Debugger::log('While instantiating the app class: ' . $exception->getMessage() . $exception->getCode());
 		}
-		
+
 		try {
 			$this->setCurrentUserData();
 		}
 		catch(Exception $ex) {
 			switch ($ex->getCode()) {
 				case 820:
-					throw new Exception('Could not set current user data. Graph API must be offline. This app cannot run.', 83);
+					throw new Exception('Could not set current user data. Graph API must be offline or current server must be not connected to Internet. This app cannot run.', 83);
 					break;
-				
+
 				default:
 					Debugger::log($ex->getMessage());
 					break;
 			}
-		}		
+		}
 
 		$this->engine->assign('logged_in', $this->facebook->isUserLoggedIn());
 
@@ -93,7 +100,7 @@ class App {
 
 	private function setCurrentUserData() {
 		if(!is_object($this->facebook)) {
-			throw new Exception('Could not instantiate Facebook API. Graph server must be offline.', 820);
+			throw new Exception('Could not instantiate Facebook API. Graph server must be offline or current server is not connected to Internet.', 820);
 		}
 		if(!method_exists($this->facebook, 'isUserLoggedIn')) {
 			throw new Exception('Could not check if user is logged in. isUserLoggedIn() method missing.', 821);
@@ -162,7 +169,7 @@ class App {
 		if($this->isUserSignedUp()) {
 
 			$benefitTable = new BenefitTable($this->db);
-			
+
 			$allActiveVipLists = $benefitTable->fetchAllActiveVipLists();
 			$numberOfActiveVipLists = count($allActiveVipLists);
 
@@ -244,7 +251,7 @@ class App {
 		if(!class_exists('\UserBenefit\Model\UserBenefit')) {
 			throw new Exception('Model class for UserBenefit was not found', 852);
 		}
-		
+
 		$benefitTable = new BenefitTable($this->db);
 
 		$data = filter_input_array(INPUT_POST);
@@ -389,7 +396,7 @@ class App {
 				Debugger::log($exception->getMessage());
 			}
 		}
-		
+
 		$this->slim->redirect(getenv('APP_URL') . '?vipListSuccess=1');
 
 	}
@@ -492,7 +499,7 @@ class App {
 		}
 
 		return false;
-		
+
 	}
 
 	public function postData($params, $smarty) {
@@ -531,7 +538,7 @@ class App {
 
 	/**
 	 * Test if a specific gender can attend a benefit
-	 * 
+	 *
 	 * @param	string	$benefitGender	Allowable genders for current benefit
 	 * @param	unknown	$userGender		User gender
 	 * @return	boolean					Whether the gender is allowed
@@ -606,10 +613,10 @@ class App {
 
  /**
      * Creates a text with a VIP List info, according with the user relationship
-     * 
+     *
      * @see   Gender
      * @uses  Gender
-     *  
+     *
      * @param number    $num_people_claimed Number of people that attended the VIP List
      * @param boolean   $current_user_attended            Se o usuário está participando ou não da Lista VIP
      * @param boolean   $accepted_gender    Se o gênero do usuário atual é aceito na Lista VIP
@@ -656,7 +663,7 @@ class App {
 
     /**
 	 * Returns an specific CSS class according with $level
-	 * 
+	 *
 	 * @param	number	$level Required. Level number between 0 and 100.
 	 * @return	string	'success', 'default', 'info', 'warning', 'danger' ou 'text-muted', dependendo do valor.
 	 */
