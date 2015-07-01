@@ -18,6 +18,7 @@
 				<div class="panel-heading">
 	    			<h2 class="panel-title">{t}Listas VIP{/t}</h2>
 	    		</div>
+					{if isset($all_active_vip_lists)}
 	        	<div class="list-group">
 					{foreach from=$all_active_vip_lists item=benefit}
 						{include file='benefit_viplist_item.tpl'}
@@ -28,6 +29,9 @@
 						</div>
 					{/foreach}
 	        	</div>
+						{else}
+						<div class="alert alert-danger">Houve algum problema ao mostrar as Listas VIP :/</div>
+						{/if}
 	        	<div class="panel-footer">
 	        	</div>
 	        </div>

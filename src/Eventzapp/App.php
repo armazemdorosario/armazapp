@@ -13,9 +13,13 @@ use \UserBenefit\Model\UserBenefitTable;
 use \UserStats\Model\UserStatsTable;
 
 /**
- * This class has methods that throw exceptions from 80 to 85. Read the docs to learn more about them.
+ * This class has methods that throw exceptions from 80 to 88. Read the docs to learn more about them.
  */
 class App {
+
+	const VIPLIST_TYPE = 1;
+	const SWEEPSTAKES_TYPE = 2;
+	const TICKET_OBJECT = 1;
 
 	private $config;
 	/**
@@ -32,6 +36,11 @@ class App {
 	private $slim;
 
 	public function __construct($dir) {
+
+		if(!App::isApacheRewriteEnabled()) {
+			throw new Exception('Apache rewrite module must be enabled to this app work properly', 88);
+		}
+
 		try {
 			$this->config = require $dir . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'application.php';
 			$this->db = new Db($dir);
@@ -116,6 +125,14 @@ class App {
 		$this->engine->assign('current_user_firstname', $this->currentUser->getFirstName());
 		$this->engine->assign('current_user_gender', $this->currentUser->getGender());
 		$this->engine->assign('current_user_signed_up', $this->isUserSignedUp());
+	}
+
+	private static function isApache() {
+		return function_exists('apache_get_modules');
+	}
+
+	private static function isApacheRewriteEnabled() {
+		return App::isApache() && in_array('mod_rewrite', apache_get_modules());
 	}
 
 	public function getRoute($key) {
@@ -233,7 +250,7 @@ class App {
 	public function handleBenefitRules($eventfbid, $benefit_type) {
 		$this->engine->assign('layout', 'benefit_rules.tpl');
 		$benefitTable = new BenefitTable($this->db);
-		$currentBenefitArgs = array($eventfbid, $benefit_type, 1);
+		$currentBenefitArgs = array($eventfbid, $benefit_type, App::OBJECT_TYPE);
 		$currentBenefit = $benefitTable->fetch($currentBenefitArgs);
 		$this->addInfoToBenefit($currentBenefit);
 
@@ -272,11 +289,11 @@ class App {
 			'userfbid' 	=> User::sanitizeAnyFbid($this->currentUser->getId()),
 			'eventfbid' => $eventfbid,
 			'private' 	=> true === $private ? '1' : '0',
-			'benefit' 	=> '1',
+			'benefit' 	=> App::VIPLIST_TYPE,
 			'chosen' 	=> '0', // This is a VIP List. Chosen if for Sweepstakes ;)
 			'actually_attended' => '1', // Let's assume that yes. But... it can be changed after...
 			'chosen_by_fbid' => User::sanitizeAnyFbid($this->currentUser->getId()), // The user itself
-			'benefit_object' => '1',
+			'benefit_object' => App::TICKET_OBJECT,
 		));
 
 		$userBenefitTable = new UserBenefitTable($this->db);
@@ -288,7 +305,7 @@ class App {
 			return;
 		}
 
-		$count = $userBenefitTable->fetchColumnCount('userfbid', "`eventfbid` = '{$eventfbid}' AND `benefit` = '1' AND `benefit_object` = '1'");
+		$count = $userBenefitTable->fetchColumnCount('userfbid', "`eventfbid` = '{$eventfbid}' AND `benefit` = '" . App::VIPLIST_TYPE . "' AND `benefit_object` = '" . App::TICKET_OBJECT . "'");
 
 		if(!isset($userWasAddedToList) || false === $userWasAddedToList) {
 			$this->slim->redirect(getenv('APP_URL') . '?vipListError=notAdded');
@@ -343,7 +360,7 @@ class App {
 		$templateContent = array(
 			array( 'name' => 'message_title', 'content' => $this->currentUser->getName() . ', ' . $notificationData['template'] ),
 			array( 'name' => 'message_content', 'content' => 'Você está participando desta Lista VIP. Não é preciso ir buscar seu ingresso: basta ir à portaria e informar seu nome, apresentando documento de identificação com foto.' ),
-			// Não se esqueça de ler o <a href="' . getenv('CANVAS_URL') . '/regulamento.php?eventfbid=' . $eventfbid . '&benefit_type=1" target="_blank">regulamento</a>.
+			// Não se esqueça de ler o <a href="' . getenv('CANVAS_URL') . '/regulamento.php?eventfbid=' . $eventfbid . '&benefit_type=" target="_blank">regulamento</a>.
 		);
 
 		$email = $this->currentUser->getEmail();
@@ -377,7 +394,7 @@ class App {
 						'vars' => array(
 							array( 'name' => 'message_title', 'content' => $this->currentUser->getName() . ', ' . $notificationData['template'] ),
 							array( 'name' => 'message_content', 'content' => 'Você está participando desta Lista VIP.' ),
-							// Não se esqueça de ler o regulamento em ' . getenv('CANVAS_URL') . '/regulamento.php?eventfbid=' . $eventfbid . '&benefit_type=1" target="_blank">regulamento</a>
+							// Não se esqueça de ler o regulamento em ' . getenv('CANVAS_URL') . '/regulamento.php?eventfbid=' . $eventfbid . '&benefit_type=" target="_blank">regulamento</a>
 						),
 					),
 				),
@@ -453,7 +470,7 @@ class App {
 				$this->handleVipListPost($eventfbid);
 			});
 			$this->slim->get('/' .  $this->getRoute('viplist') . '/:eventfbid/regulamento/', function($eventfbid) {
-				$this->handleBenefitRules($eventfbid, 1);
+				$this->handleBenefitRules($eventfbid, App::VIPLIST_TYPE);
 			});
 		}
 		catch(Exception $exception) {

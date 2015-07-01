@@ -6,12 +6,18 @@ Facebook social app for Armazem do Rosario
 
 We needed a better way to manage VIP Lists and Sweepstakes. There is.
 
+## Files to be ignored when exchanging files through servers
+
+* /config and /cache directories;
+* .env file
+* (Check other files on .gitignore)
+
 ## Installation
 
 * Checkout the source: `git clone git://github.com/armazemdorosario/armazapp.git`
 * Run `composer install` to install back-end dependencies;
 * Run `bower install` to install front-end dependencies;
-* Create a .env file and set `ENV` (development, staging or production);
+* Create a .env file and set `ENV` (development, staging or production) based on .env.example file (included);
 * Create or retrieve your Facebook app and set `APP_ID`, `APP_SECRET`, `APP_URL` and `CANVAS_URL` on .env file;
 * Still on .env, set relative paths like `CACHE_DIR`, `COMPILE_DIR`, `CONFIGS_DIR` and `TEMPLATE_DIR` for Smarty;
 * Set `MAILER_API_KEY` for your Mandrill API key (It's possible that Mandrill doesn't work on development env);

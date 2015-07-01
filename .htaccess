@@ -8,3 +8,5 @@ RewriteRule ^ index.php [QSA,L]
  order allow,deny
  deny from all
 </files>
+
+ErrorDocument 404 /404.html

@@ -16,6 +16,15 @@ class BenefitTable extends Table {
         parent::__construct($pdo, $this->tableName, $this->fetchObjectName);
     }
 
+    public function fetch($data) {
+      if(is_numeric($data)) {
+        return parent::fetch(array($data, 1, 1));
+      }
+      else {
+        return parent::fetch($data);
+      }
+    }
+
     public function getIDField() {
         return array('eventfbid', 'benefit_type', 'object');
     }

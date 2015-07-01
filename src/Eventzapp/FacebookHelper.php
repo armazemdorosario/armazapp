@@ -39,10 +39,13 @@ class FacebookHelper {
 					throw new Exception('Session not active, could not load state. Needs session_start();', 900);
 					break;
 				case 28:
-					throw new Exception('Bad internet. Connection to Graph API timed out', 901);
+					throw new Exception('Bad internet or SSL issues. Connection to Graph API timed out.', 901);
 					break;
 				case 100:
 					throw new Exception('Error validating verification code. If you are moving between development environments, please make sure your redirect_uri is identical to the one you used in the OAuth dialog request', 902);
+					break;
+				case 35:
+					throw new Exception('Error when trying to connect to Facebook Graph API. Please check if you are using a local server and if needed SSL modules are activated.', 903);
 					break;
 				default:
 					Debugger::log('While trying to get session from redirect: ' . $ex->getMessage() . $ex->getCode());
@@ -53,7 +56,7 @@ class FacebookHelper {
 				case 100:
 					Debugger::log('This authorization code has been used.');
 					break;
-				
+
 				default:
 					Debugger::log('When validation fails or other local issues. ' . $ex->getMessage());
 					break;
@@ -70,7 +73,7 @@ class FacebookHelper {
 					case 35:
 						Debugger::log('Unknown SSL protocol error in connection to graph.facebook.com:443');
 						break;
-					
+
 					default:
 						Debugger::log('On constructing Facebook helper class: ' . $ex->getMessage() . $ex->getCode());
 						break;
@@ -92,10 +95,10 @@ class FacebookHelper {
 			$this->loginUrl = $this->loginHelper->getLoginUrl(array('scope'=>$_appRequiredScope));
 		}
 
-		if (isset($this->session)) {   
+		if (isset($this->session)) {
 		    $_SESSION['token'] = $this->session->getToken();
 		    $this->setCurrentUserProfile();
-		} 
+		}
 
 	}
 
@@ -180,7 +183,7 @@ class FacebookHelper {
 	 * @return null|mixed Event info or a null result, if fails.
 	 */
 	public function getEventInfoViaFacebook($fbid, $key = '') {
-		
+
 		if(isset($fbid) && !empty($fbid) && !is_null($fbid) && in_array(strlen($fbid), array(15, 16))) {
 			try {
 				$request = new FacebookRequest($this->session, 'GET', '/' . $fbid);
@@ -202,7 +205,7 @@ class FacebookHelper {
 		else {
 			throw new Exception('You tried to get event info via Facebook, but Event Facebook ID is invalid', 910);
 		}
-		
+
 	}
 
 	public function getPermissions() {
@@ -235,7 +238,7 @@ class FacebookHelper {
 
 	/**
 	 * Uses Facebook API to post something on timeline
-	 * 
+	 *
 	 * @param	array			$data	Publication data
 	 * @return	mixed|boolean	API call result or false if there was an error
 	 */
@@ -255,7 +258,7 @@ class FacebookHelper {
 
 	/**
 	 * Uses Facebook API to confirm attend an user
-	 * 
+	 *
 	 * @param string $eventfbid Event Facebook ID
 	 * @return Ambigous <boolean, mixed> API call result or false if there was an error
 	 */
@@ -274,10 +277,10 @@ class FacebookHelper {
 
 	/**
 	 * Sends a notification to user using Facebook API
-	 * 
+	 *
 	 * App must be running in HTTPs mode.
 	 * In additiion, app must have canvas mode activated, with a secure and valid URL
-	 * 
+	 *
 	 * @param array $data		Required. Array with data used by API to generate the notification.
 	 * @param string $userfbid	ID of user that is going to be notified
 	 * @return mixed			Facebook API response about notification
