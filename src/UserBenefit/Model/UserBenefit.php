@@ -28,15 +28,15 @@ class UserBenefit {
 
 	public function exchangeArray(array $data) {
 		$definition = array(
-			'userfbid' 	=> \FILTER_SANITIZE_STRING,
-			'eventfbid' => \FILTER_SANITIZE_STRING,
-			'benefit_object' => \FILTER_SANITIZE_NUMBER_INT,
-			'private' 	=> \FILTER_SANITIZE_NUMBER_INT,
-			'benefit' 	=> \FILTER_SANITIZE_NUMBER_INT,
-			'chosen' 	=> \FILTER_SANITIZE_NUMBER_INT,
+			'userfbid' 					=> \FILTER_SANITIZE_STRING,
+			'eventfbid' 				=> \FILTER_SANITIZE_STRING,
+			'benefit_object' 		=> \FILTER_SANITIZE_NUMBER_INT,
+			'private' 					=> \FILTER_SANITIZE_NUMBER_INT,
+			'benefit' 					=> \FILTER_SANITIZE_NUMBER_INT,
+			'chosen' 						=> \FILTER_SANITIZE_NUMBER_INT,
 			'actually_attended' => \FILTER_SANITIZE_NUMBER_INT,
-			'chosen_by_fbid' => \FILTER_SANITIZE_STRING,
-			'ub_date_created' => \FILTER_SANITIZE_STRING,
+			'chosen_by_fbid' 		=> \FILTER_SANITIZE_STRING,
+			'ub_date_created' 	=> \FILTER_SANITIZE_STRING,
 		);
 		foreach (filter_var_array($data, $definition) as $key => $value) {
 			if(property_exists($this, $key)) {

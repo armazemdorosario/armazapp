@@ -5,19 +5,17 @@
  * @package Eventzapp
  */
 use Eventzapp\Debugger;
+use Eventzapp\Exception;
+
 session_start();
 require 'vendor/autoload.php';
 $dotenv = Dotenv::load(__DIR__);
-if('production'===getenv('ENV')) {
-	error_reporting(0);
-	ini_set('display_errors', 0);
-	ini_set('safe_mode', 'off');
-}
+
 try {
 	$app = new Eventzapp\App(__DIR__);
 	$app->run();
 }
-catch(\Eventzapp\Exception $ex) {
+catch(Exception $ex) {
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,7 +24,6 @@ catch(\Eventzapp\Exception $ex) {
 		<link rel="dns-prefetch" href="https://graph.facebook.com" />
 		<meta http-equiv="refresh" content="10" />
 		<meta http-equiv="x-dns-prefetch-control" content="on" />
-		<link rel="prerender" href="./" />
 		<style><!-- body {font-family: 'Courier New', Courier; position: relative; background-color: #000000; color: #FFFFFF; }div {width: 30%; margin-left: auto; margin-right: auto; margin-top: 20%;}h1 {font-weight: normal;}pre {display: none;} --></style>
 	</head>
 	<body>

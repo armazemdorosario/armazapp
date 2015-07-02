@@ -11,6 +11,7 @@ use \User\Model\UserTable;
 use \UserBenefit\Model\UserBenefit;
 use \UserBenefit\Model\UserBenefitTable;
 use \UserStats\Model\UserStatsTable;
+use \ViewUserBenefit\Model\ViewUserBenefitTable;
 
 /**
  * This class has methods that throw exceptions from 80 to 88. Read the docs to learn more about them.
@@ -22,12 +23,23 @@ class App {
 	const TICKET_OBJECT = 1;
 
 	private $config;
+
 	/**
-	 * Currently logged user info
+	 * Currently logged user info (fetched from Facebook API)
 	 *
 	 * @var object Call it using functions like getId() to get the current user ID
 	 */
 	private $currentUser;
+
+	/**
+	 * Currently logged user info (fetched from Database)
+	 *
+	 * Works only if user is signed up
+	 *
+	 * @var User Use properties like access_level or methods like isAdministrator()
+	 */
+	private $currentUserData;
+
 	private $db;
 	private $engine;
 	private $facebook;
@@ -35,6 +47,14 @@ class App {
 	private $messages = array();
 	private $slim;
 
+	/**
+	* Constructor function
+	*
+	* Connects to Facebook API, application database and another classes to make this app work.
+	*
+	* @uses \Facebook
+	* @uses armazemapp\PDOAdapter
+	*/
 	public function __construct($dir) {
 
 		if(!App::isApacheRewriteEnabled()) {
@@ -125,6 +145,14 @@ class App {
 		$this->engine->assign('current_user_firstname', $this->currentUser->getFirstName());
 		$this->engine->assign('current_user_gender', $this->currentUser->getGender());
 		$this->engine->assign('current_user_signed_up', $this->isUserSignedUp());
+
+		if($this->isUserSignedUp()) {
+			$userTable = new UserTable($this->db);
+			$this->currentUserData = $userTable->fetch($this->currentUser->getId());
+			$this->engine->assign('current_user_data', $this->currentUserData);
+			$this->engine->assign('current_user_is_administrator', $this->currentUserData->isAdministrator());
+		}
+
 	}
 
 	private static function isApache() {
@@ -418,7 +446,20 @@ class App {
 
 	}
 
-	public function handleVipList() {
+	public function handleVipListGet($eventfbid) {
+		$userBenefitViewClass = 'ViewUserBenefit\Model\ViewUserBenefitTable';
+		if(!class_exists($userBenefitViewClass)) {
+			throw new Exception('Class ViewUserBenefit was not loaded. Cannot show VIP List users.');
+		}
+
+		$userBenefitView = new ViewUserBenefitTable($this->db);
+		if(!is_a($userBenefitView, $userBenefitViewClass)) {
+			throw new Exception('Could not instantiate ViewUserBenefit.');
+		}
+
+		$users = $userBenefitView->fetchUsersByEvent($eventfbid, App::VIPLIST_TYPE, $this->currentUserData->isAdministrator());
+
+		$this->engine->assign('current_viplist_users', $users);
 		$this->engine->assign('layout', 'app_vip_list.tpl');
 	}
 
@@ -458,10 +499,10 @@ class App {
 
 		try {
 			$this->slim->get('/' .  $this->getRoute('viplist') . '/:eventfbid', function($eventfbid) {
-				$this->handleVipList($eventfbid);
+				$this->handleVipListGet($eventfbid);
 			});
 			$this->slim->get('/' .  $this->getRoute('viplist') . '/:eventfbid/', function($eventfbid) {
-				$this->handleVipList($eventfbid);
+				$this->handleVipListGet($eventfbid);
 			});
 			$this->slim->post('/' . $this->getRoute('viplist') . '/:eventfbid', function($eventfbid) {
 				$this->handleVipListPost($eventfbid);
@@ -542,14 +583,15 @@ class App {
 	 * @todo sanitize params
 	 */
 	public function profilePicture($params, $smarty) {
-		$id = isset($params['id']) ? User::sanitizeFbid($params['id']) : null;
+		$id = isset($params['id']) ? User::sanitizeAnyFbid($params['id']) : null;
 		$size = isset($params['size']) ? intval($params['size']) : 100;
 		$src = null !== $id ? $this->facebook->getUserProfilePictureURL($id, $size) : $this->facebook->getCurrentUserProfilePictureURL($size);
-		$class = isset($params['class']) ? $params['class'] : '';
 		$name = isset($params['name']) ? $params['name'] : $this->currentUser->getName();
 		$alt = sprintf(_('Photo of %s'), $name);
 		$lazy = isset($params['lazy']);
 		$lazySrcAttribute = $lazy ? 'data-original' : 'src';
+		$class = $lazy ? 'lazy ' : '';
+		$class .= isset($params['class']) ? $params['class'] : '';
 		return '<img alt="'.htmlentities($alt).'" class="'.$class.'" '.$lazySrcAttribute.'="'.$src.'" height="'.$size.'" width="'.$size.'" />';
 	}
 

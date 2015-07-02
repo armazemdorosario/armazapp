@@ -31,7 +31,8 @@
         	"User\\": "src/User/",
         	"UserBenefit\\": "src/UserBenefit/",
         	"UserCrush\\": "src/UserCrush/",
-        	"UserStats\\": "src/UserStats/"
+        	"UserStats\\": "src/UserStats/",
+					"ViewUserBenefit\\": "src/ViewUserBenefit/"
         }
 	},
     "require": {

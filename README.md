@@ -1,4 +1,5 @@
 ## Armazapp
+[![Code Climate](https://codeclimate.com/github/armazemdorosario/armazapp/badges/gpa.svg)](https://codeclimate.com/github/armazemdorosario/armazapp) [![Test Coverage](https://codeclimate.com/github/armazemdorosario/armazapp/badges/coverage.svg)](https://codeclimate.com/github/armazemdorosario/armazapp/coverage)
 
 Facebook social app for Armazem do Rosario
 

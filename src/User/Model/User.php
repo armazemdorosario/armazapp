@@ -12,7 +12,19 @@ class User {
 	public $ir_number;
 	public $fbname;
 	public $fbgender;
+
+	/*
+	 * User access level
+	 *
+	 *
+	 * 0 = Registered user (can join VIP Lists and Sweepstakes)
+	 * 1 = Promoter (can add registered users to Promoter VIP Lists and see stats)
+	 * 2 = Cannot join VIP Lists and never will win a ticket sweepstake
+	 * 3 = Administrator. Can see private claims, download benefit data and create/change benefit status.
+	 * 4 = Super Administrator. Can change/delete benefits and users' data.
+	 */
 	public $access_level = 0;
+
 	public $trust_level = null;
 	public $date_created;
 	public $date_updated;
@@ -85,7 +97,7 @@ class User {
 
 	/**
 	 * Sanitize user full name, removing accents and correcting capitalization.
-	 * 
+	 *
 	 * @param string $name Name
 	 * @return string Sanitized name
 	 */
@@ -114,16 +126,16 @@ class User {
 						$formatted_name[] = ucwords( $word );
 						break;
 				}
-			}			
+			}
 		}
 		return implode( ' ', $formatted_name );
 	}
 
 	/**
 	 * Tests if Facebook user ID is valid.
-	 * 
+	 *
 	 * To be valid, it has to be 9, 10 or 15 of length. If 10 ou 15, must start with 1.
-	 * 
+	 *
 	 * @param string $userfbid
 	 * @return boolean
 	 */
@@ -160,9 +172,9 @@ class User {
 
 	/**
 	 * Calculates the trust level of user names
-	 * 
+	 *
 	 * This function compares the database name with the Facebook name
-	 * 
+	 *
 	 * @param string $name		Required. The name registered by user on app.
 	 * @param string $fbname	Required. The name registered by user on Facebook
 	 * @return number			A value between 0 and 100.
@@ -188,7 +200,7 @@ class User {
 			if(in_array(strtolower($word), User::$nameBlacklistedWords)) {
 				return 0.01;
 			}
-		}		
+		}
 		similar_text($name, $fbname, $percent);
 		return number_format($percent, 2);
 	}
@@ -233,5 +245,36 @@ class User {
 	public function sanitizeGender() {
 		return isGenderValid() ? $this->fbgender : null;
 	}
-	
+
+	/**
+	* Retrieves user access level
+	*
+	* @return boolean|number User access level, starting from 0 (Registered User)
+	*/
+	public function getUserLevel() {
+		return intval($this->access_level);
+	}
+
+	/**
+	* User is promoter?
+	*
+	* Uses $access_level object property to check if user is a promoter (level 1)
+	*
+	* @return boolean Whether user is promoter
+	*/
+	public function isPromoter() {
+		return 1 === $this->access_level;
+	}
+
+	/**
+	* User has administrative access?
+	*
+	* Uses $access_level object property to check if user is administrator
+	*
+	* @return boolean Whether user is administrator (4) or super administrator (5)
+	*/
+	public function isAdministrator() {
+		return $this->access_level >= 4;
+	}
+
 }

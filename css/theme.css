@@ -994,7 +994,7 @@ a:hover img.circle, img.circle:hover {
 	   height: 15px !important;
 	   width: 25px !important;
 	}
-	
+
 	.switchery > small {
 	   height: 15px !important;
 	   width: 15px !important;
@@ -1102,4 +1102,25 @@ input[type=text], input[type=email], input[type=url], input[type=phone], textare
 
 :-ms-input-placeholder {
 	color: #FFFFFF;
+}
+
+li.item, li.item a, li.item a img {
+	position: relative;
+}
+li.item a img {
+	opacity: 0.8;
+	margin-bottom: 10px;
+	transition: opacity 0.2s ease-in-out;
+}
+li.item a:hover img, li.item a:focus img {
+	opacity: 1;
+}
+li.item a span.label-info {
+	position: absolute;
+	bottom: 0px;
+}
+li a.private img {
+	filter: grayscale(100%);
+	opacity: 0.5;
+	-webkit-filter: grayscale(100%);
 }

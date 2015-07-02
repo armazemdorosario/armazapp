@@ -6,7 +6,6 @@
 		</div>
 		<script data-cfasync="false" src="{$app_url}/bower_components/jquery.lazyload/jquery.lazyload.js"></script>
 		<script data-cfasync="false" src="{$app_url}/bower_components/switchery/dist/switchery.min.js"></script>
-		<script data-cfasync="false" src="{$app_url}/js/typeahead.bundle.js"></script>
 		<script data-cfasync="false" src="{$app_url}/js/main.js"></script>
 		<script>
 		{literal}$zopim(function() {{/literal}

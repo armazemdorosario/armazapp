@@ -5,11 +5,11 @@
 			{profile_picture}
 			<span class="label label-info" style="position: absolute; bottom: 0px; left: 33.33px;">
 				<span class="glyphicon glyphicon-hand-up"></span>
-				{t}&Eacute; voc&ecirc;{/t}
+				{t}É você{/t}
 			</span>
 		</a>
 		<h3 class="hidden-xs col-sm-7 col-md-8">
-			{t}Ol&aacute;, {/t}{$current_user_name}
+			{t}Olá, {/t}{$current_user_name}
 		</h3>
 		<h4 class="visible-xs col-xs-7">
 			{t}Oi, {/t}{$current_user_name}

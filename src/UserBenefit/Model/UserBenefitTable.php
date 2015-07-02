@@ -23,6 +23,36 @@ class UserBenefitTable extends Table {
 		return array('userfbid', 'eventfbid', 'benefit_object');
 	}
 
+	public function fetch($data) {
+		if(is_numeric($data)) {
+			throw new Exception('Insuficient data to fetch UserBenefit table. Please use an array as argument for fetch() function.', 610);
+		}
+		return parent::fetch($data);
+	}
+
+	public function fetchUsersByEvent($eventfbid, $benefit_type = 1, $includePrivate = false) {
+
+		if(!Benefit::isAnyEventFbidValid($eventfbid)) {
+			throw new Exception('Cannot fetch users-benefits data because benefit ID is invalid', 611);
+		}
+		$where = "`eventfbid` = '$eventfbid' AND `benefit` = '$benefit_type'";
+		$where .= true === $includePrivate ? '' : " AND `private` = '0'";
+		try {
+			return parent::fetchAll($where);
+		}
+		catch(\Exception $e) {
+			switch ($e->getCode()) {
+				case 1054:
+					throw new Exception('Error when trying to get users from an event. Database query must be wrong: ' . $e->getMessage());
+					break;
+
+				default:
+					throw new Exception('Error when trying to get users from an event.' . $e->getMessage() . ' ' . $e->getCode());
+					break;
+			} // end switch
+		} // end throw catch
+	} // end function fetchUsersByEvent
+
 	/**
 	 * Inserts a $userfbid on $eventfbid benefit (VIP List or Sweepstake)
 	 */

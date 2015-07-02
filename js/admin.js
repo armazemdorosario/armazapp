@@ -9,23 +9,6 @@ var usersSource = new Bloodhound({
 
 usersSource.initialize();
 
-$('.typeahead#userfbid').typeahead({
-	hint: true,
-	highlight: true,
-	minLength: 1
-}, {
-	name: 'usersSource',
-	displayKey: 'fbname',
-	source: usersSource.ttAdapter(),
-	templates: {
-	    empty: [
-	      '<div class="empty-message">',
-	      'Nenhum usuário encontrado que pareça com este nome',
-	      '</div>'
-	    ].join('\n')
-		}
-	});
-
 $('.js-switch').each(function(index, element) {
 	new Switchery(element, { color: '#64BD63', secondaryColor: '#FEC200' });
 });

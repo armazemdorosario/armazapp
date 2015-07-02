@@ -7,7 +7,7 @@ use \Japhpy\Table;
 use \PDO;
 
 class UserTable extends Table {
-	
+
 	protected $tableName = 'users';
 	protected $fetchObjectName;
 
@@ -20,6 +20,12 @@ class UserTable extends Table {
 		return 'fbid';
 	}
 
+	/**
+	 * User signup. Save her/his data on database
+	 *
+	 * @param User $user User object with data collected via form or API
+	 * @return unknown Signup query result, if was possible.
+	 */
 	public function save($user, $autoIncrementIdField = false) {
 		if(empty($user->fbid)) {
 			throw new Exception('User Facebook ID cannot be empty', 500);
