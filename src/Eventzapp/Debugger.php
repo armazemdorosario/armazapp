@@ -3,13 +3,17 @@
 namespace Eventzapp;
 
 class Debugger {
-	
+
 	public static function log($message) {
-		switch (getenv('ENV')) {
+
+		$env = getenv('ENV');
+		$env = empty($env) ? 'development' : $env;
+
+		switch ($env) {
 			case 'development':
-				echo '<pre>'.$message.'</pre>';
+				echo '<pre>'.$message.'</pre>' . "\n";
 				break;
-			
+
 			default:
 				error_log($message);
 				break;

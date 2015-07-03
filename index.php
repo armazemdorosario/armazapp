@@ -9,7 +9,26 @@ use Eventzapp\Exception;
 
 session_start();
 require 'vendor/autoload.php';
-$dotenv = Dotenv::load(__DIR__);
+
+if(class_exists('Dotenv')) {
+	$dotenv = Dotenv::load(__DIR__);
+}
+elseif(class_exists('Dotenv\Dotenv')) {
+	try {
+		$dotenv = new Dotenv\Dotenv(__DIR__);
+		$dotenv->load();
+		$dotenv->required(['APP_ID', 'APP_SECRET', 'APP_URL', 'LOGIN_URL']);
+		#$dotenv->required('ENV')->allowedValues(['development', 'staging', 'production']);
+	}
+	catch(\RuntimeException $e) {
+		Debugger::log('Problem with .env file: ' . $e->getMessage() . ' ' . $e->getCode());
+		die();
+	}
+}
+else {
+	Debugger::log('.env file is missing or Dotenv class was not loaded. Please: <ol><li>create or check .env file on ' . __DIR__ . '</li><li>Check your Dotenv version. Version 1 loads \Dotenv class, version 2 loads \Dotenv\Dotenv class.</li></ul>');
+	die();
+}
 
 try {
 	$app = new Eventzapp\App(__DIR__);
@@ -33,7 +52,11 @@ catch(Exception $ex) {
 			<?php  ?>
 		</div>
 	</body>
-	<?php Debugger::log('App response: ' . $ex->getMessage() . ' ' . $ex->getCode()); ?>
+	<?php
+	$message = 'App response: ' . $ex->getMessage() . ' ' . $ex->getCode();
+	Debugger::log($message);
+	?>
 </html>
 <?php
+	die();
 }

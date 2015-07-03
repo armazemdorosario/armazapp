@@ -5,9 +5,13 @@ _notes
 dwsync.xml
 configs/*
 config/*
+!config/.gitkeep
+!config/autoload/.gitkeep
 error_log*
-templates_c/
+compiled/
+!compiled/.gitkeep
 cache/
+!cache/.gitkeep
 
 /coverage/
 vendor/

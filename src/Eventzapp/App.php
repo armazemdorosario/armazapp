@@ -58,11 +58,29 @@ class App {
 	public function __construct($dir) {
 
 		if(!App::isApacheRewriteEnabled()) {
-			throw new Exception('Apache rewrite module must be enabled to this app work properly', 88);
+			throw new Exception('Apache rewrite module must be enabled to this app work properly', 880);
+		}
+
+		$configsDir = getenv('CONFIGS_DIR');
+		if(false === $configsDir) {
+			throw new Exception('Configs directory not set on .env file. Please check if .env file exists and if CONFIGS_DIR was set.', 881);
+		}
+
+		$configPath = array($dir, $configsDir, 'application.php');
+		$configFile = implode(DIRECTORY_SEPARATOR, $configPath);
+
+		if(isset($configsDir) && file_exists($configFile)) {
+			$this->config = require_once $configFile;
+		}
+		else {
+			throw new Exception('Application config file (application.php) was not found on config directory. Please create file or check ' . $configsDir . ' directory. App cannot run.', 882);
+		}
+
+		if(false === getenv('APP_ID')) {
+			throw new Exception('You must provide or set a default application id (APP_ID) on your .env file', 883);
 		}
 
 		try {
-			$this->config = require $dir . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'application.php';
 			$this->db = new Db($dir);
 			$this->engine = new TemplateHelper(__DIR__);
 			$this->facebook = new FacebookHelper(getenv('APP_ID'), getenv('APP_SECRET'), getenv('LOGIN_URL'), $this->config['required_scope']);
@@ -75,16 +93,25 @@ class App {
 		}
 		catch(\Exception $exception) {
 			switch($exception->getCode()) {
+				case 1045:
+					Debugger::log('Please check database username & password credentials: ' . $exception->getMessage(), 884);
+					break;
 				case 1049:
-					Debugger::log('Seems like you did not configure the database server: ' . $exception->getMessage());
+					Debugger::log('Seems like you did not configure the database server and/or database schema: ' . $exception->getMessage(), 885);
+					break;
+				case 2002:
+					Debugger::log('Database server seems to be offline. Please check if service is running. ' . $exception->getMessage(), 886);
+					break;
+				case 700:
+					Debugger::log('You must provide or set a default application id (APP_ID) on your .env file', 887);
 					break;
 				default:
-					Debugger::log('While instantiating the app class: ' . $exception->getMessage() . $exception->getCode());
+					Debugger::log('While instantiating the app class: ' . $exception->getMessage() . $exception->getCode(), 888);
 					break;
 			} // end switch
 		}
 		catch(Facebook\FacebookSDKException $exception) {
-			Debugger::log('While instantiating the app class: ' . $exception->getMessage() . $exception->getCode());
+			Debugger::log('While instantiating the app class: ' . $exception->getMessage() . $exception->getCode(), 889);
 		}
 
 		try {
@@ -93,7 +120,7 @@ class App {
 		catch(Exception $ex) {
 			switch ($ex->getCode()) {
 				case 820:
-					throw new Exception('Could not set current user data. Graph API must be offline or current server must be not connected to Internet. This app cannot run.', 83);
+					throw new Exception('Could not set current user data. Your config file must be missing, Graph API must be offline or current server must be not connected to Internet. This app cannot run.', 83);
 					break;
 
 				default:
@@ -124,12 +151,18 @@ class App {
 		$this->engine->getEngine()->registerPlugin('function', 'gender_can_attend', array($this, 'engineGenderCanAttend'));
 		$this->engine->getEngine()->registerPlugin('function', 'g', array($this, 'g'));
 		$this->engine->getEngine()->registerPlugin('function', 'level_css_class', array($this, 'getCssClassBasedOnLevel'));
+		$this->engine->getEngine()->registerPlugin('block', 't', array($this, 'translate'));
+
 		$this->handleMessages();
+	}
+
+	public function translate($params, $content, &$smarty) {
+		return $content;
 	}
 
 	private function setCurrentUserData() {
 		if(!is_object($this->facebook)) {
-			throw new Exception('Could not instantiate Facebook API. Graph server must be offline or current server is not connected to Internet.', 820);
+			throw new Exception('Could not instantiate Facebook API. Check if your config file is correct, if graph server is online or current server is connected to Internet.', 820);
 		}
 		if(!method_exists($this->facebook, 'isUserLoggedIn')) {
 			throw new Exception('Could not check if user is logged in. isUserLoggedIn() method missing.', 821);
@@ -265,6 +298,11 @@ class App {
 					# User individual registration number already exists on database
 					$this->messages['danger'] = '<strong>Temos um problema</strong>: Já existe uma pessoa cadastrada no aplicativo com o CPF que você informou.<br />Pode ser que você já tenha se cadastrado com outra conta do Facebook. Por favor, envie inbox pra gente informando este problema.';
 					$this->engine->assign('ir_number_form_group_class', 'has-error');
+					return;
+					break;
+				case 515:
+					# Cannot check for ID card existence. Database schema seems to be empty or invalid.
+					$this->messages['danger'] = '<strong>Temos um problema</strong>: Não conseguimos completar seu cadastro. Por favor, envie inbox pra gente informando este problema.';
 					return;
 					break;
 			}

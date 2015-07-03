@@ -51,7 +51,13 @@ class UserTable extends Table {
 		if(!$user->isIdCardValid()) {
 			throw new Exception('User ID card number is not valid: ' . $user->id_card, 507);
 		}
-		if($this->fetchBy('id_card', $user->id_card)) {
+		try {
+			$idCardAlreadyExists = $this->fetchBy('id_card', $user->id_card);
+		}
+		catch(\Exception $e) {
+			throw new Exception('Cannot check for ID card existence. Database schema seems to be empty or invalid. ' . $e->getMessage(), 515);
+		}
+		if($idCardAlreadyExists) {
 			throw new Exception('User ID card number already exists on database', 508);
 		}
 		if(empty($user->ir_number)) {

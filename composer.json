@@ -36,12 +36,11 @@
         }
 	},
     "require": {
-        "facebook/php-sdk-v4" : "4.0.*",
-        "jimmyandrade/japhpy": "~1.0",
-        "mandrill/mandrill": ">=1.0.0",
+        "facebook/php-sdk-v4" : ">=4.0.23",
+        "jimmyandrade/japhpy": ">=1.1",
+        "mandrill/mandrill": ">=1.0.54",
         "slim/slim": ">=2.6.2",
-        "smarty/smarty": ">=3.1.24",
-        "smarty-gettext/smarty-gettext": "~1.1.1",
-        "vlucas/phpdotenv" : ">=1.1.0"
+        "smarty/smarty": ">=3.1.27",
+        "vlucas/phpdotenv" : ">=2.0.1"
     }
 }

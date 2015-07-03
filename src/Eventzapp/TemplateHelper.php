@@ -22,6 +22,16 @@ class TemplateHelper {
 			return Debugger::log('Smarty class could not be loaded');
 		}
 
+		if(false === getenv('CACHE_DIR')) {
+			putenv('CACHE_DIR=cache');
+		}
+		if(false === getenv('TEMPLATE_DIR')) {
+			putenv('TEMPLATE_DIR=src/Eventzapp/templates');
+		}
+		if(false === getenv('COMPILE_DIR')) {
+			putenv('COMPILE_DIR=compiled');
+		}
+
 		$this->engine->setTemplateDir(getenv('TEMPLATE_DIR'));
 		$this->engine->setCompileDir(getenv('COMPILE_DIR'));
 		$this->engine->setCacheDir(getenv('CACHE_DIR'));
@@ -71,7 +81,8 @@ class TemplateHelper {
 				$this->engine->display($this->templateFile);
 			}
 		}
-		catch(Exception $exception) {
+		catch(Exception $e) {
+			Debugger::log($e->getMessage());
 			return ''; // Because __toString can't throw exceptions
 		}
 	}

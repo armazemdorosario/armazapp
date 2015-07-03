@@ -32,7 +32,7 @@
   <div class="clear clearfix"></div>
   <hr />
 </main>
-<script src="https://masonry.desandro.com/masonry.pkgd.min.js"></script>
+<script src="{$app_url}/bower_components/dist/masonry.pkgd.min.js"></script>
 <script type="text/javascript">
 if(Masonry) {
   var msnry = new Masonry( '#container', { columnWidth = 190 } );
