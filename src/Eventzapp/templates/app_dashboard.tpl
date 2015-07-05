@@ -39,7 +39,8 @@
     </div>
   </div>
   <div class="col-sm-8">
-    <iframe id="benefits-viewer" name="benefits-viewer" style="border: 0px; min-height: 100%; min-width: 320px; width: 100%;">
+    <iframe id="benefits-viewer" name="benefits-viewer"
+    style="border: 0px; min-height: 999px; min-width: 320px; width: 100%;">
     </iframe>
   </div>
 </main>

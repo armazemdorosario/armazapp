@@ -17,7 +17,7 @@ class ViewUserBenefitTable extends UserBenefitTable {
     throw new Exception('This view is read-only. Save feature is not available.');
   }
 
-  public function fetchUsersByEvent($eventfbid, $benefit_type = 1, $includePrivate = false) {
+  public function fetchUsersByEvent($eventfbid, $benefit_type = 1, $includePrivate = false, $orderby = '') {
     return parent::fetchUsersByEvent($eventfbid, $benefit_type, $includePrivate, 'name ASC, fbname ASC');
   }
 
