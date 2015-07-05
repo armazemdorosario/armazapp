@@ -90,6 +90,7 @@ class App {
 			$this->engine->getEngine()->debugging = '1' === getenv('TEMPLATE_DEBUG');
 			$this->engine->getEngine()->caching = '1' === getenv('TEMPLATE_CACHE');
 			$this->engine->assign('env', getenv('ENV'));
+			$this->engine->setTemplateFile('index.tpl');
 		}
 		catch(\Exception $exception) {
 			switch($exception->getCode()) {
@@ -150,7 +151,7 @@ class App {
 		$this->engine->getEngine()->registerPlugin('function', 'fb_event', array($this, 'getEventInfoViaFacebook'));
 		$this->engine->getEngine()->registerPlugin('function', 'gender_can_attend', array($this, 'engineGenderCanAttend'));
 		$this->engine->getEngine()->registerPlugin('function', 'g', array($this, 'g'));
-		$this->engine->getEngine()->registerPlugin('function', 'level_css_class', array($this, 'getCssClassBasedOnLevel'));
+		$this->engine->getEngine()->registerPlugin('function', 'level_css_class', array($this, 'engineGetCssClassBasedOnLevel'));
 		$this->engine->getEngine()->registerPlugin('block', 't', array($this, 'translate'));
 
 		$this->handleMessages();
@@ -198,7 +199,7 @@ class App {
 
 	public function getRoute($key) {
 		$key = trim($key, ' /');
-		return isset($this->config['routes'][$key]) ? $this->config['routes'][$key] : null;
+		return isset($this->config['routes'][$key]) ? $this->config['routes'][$key] : $key;
 	}
 
 	public function addInfoToBenefit(Benefit $benefit) {
@@ -484,21 +485,69 @@ class App {
 
 	}
 
-	public function handleVipListGet($eventfbid) {
+	private function getUserBenefitView() {
 		$userBenefitViewClass = 'ViewUserBenefit\Model\ViewUserBenefitTable';
 		if(!class_exists($userBenefitViewClass)) {
-			throw new Exception('Class ViewUserBenefit was not loaded. Cannot show VIP List users.');
+			throw new Exception('Class ViewUserBenefit was not loaded. Cannot get VIP List users.');
 		}
-
 		$userBenefitView = new ViewUserBenefitTable($this->db);
 		if(!is_a($userBenefitView, $userBenefitViewClass)) {
 			throw new Exception('Could not instantiate ViewUserBenefit.');
 		}
+		return $userBenefitView;
+	}
 
+	public function handleVipListGet($eventfbid) {
+		$userBenefitView = $this->getUserBenefitView();
 		$users = $userBenefitView->fetchUsersByEvent($eventfbid, App::VIPLIST_TYPE, $this->currentUserData->isAdministrator());
 
+		$benefitTable = new BenefitTable($this->db);
+		$vipList = $benefitTable->fetch($eventfbid);
+		$this->addInfoToBenefit($vipList);
+
+		$this->engine->assign('benefit', $vipList);
 		$this->engine->assign('current_viplist_users', $users);
 		$this->engine->assign('layout', 'app_vip_list.tpl');
+	}
+
+	public function handleBenefitDownload($eventfbid, $benefit_type = App::VIPLIST_TYPE) {
+
+		if(!$this->currentUserData->isAdministrator()) {
+			throw new Exception('Access denied: only administrators can download benefit list', 1);
+		}
+
+		$userBenefitView = $this->getUserBenefitView();
+		$users = $userBenefitView->fetchUsersByEvent($eventfbid, App::VIPLIST_TYPE, true);
+
+		$benefitTable = new BenefitTable($this->db);
+		$vipList = $benefitTable->fetch($eventfbid);
+		$this->addInfoToBenefit($vipList);
+
+		$this->engine->assign('benefit', $vipList);
+		$this->engine->assign('users', $users);
+		$this->engine->setTemplateFile('viplist_download.tpl');
+		$filename = 'Lista VIP';
+		# header('Content-disposition: attachment; filename="' . $filename . ' - ' . $eventfbid . '.xls.html"');
+		#header('Content-type: application/msexcel"');
+	}
+
+	public function handleDashboard() {
+		$this->engine->assign('layout', 'app_dashboard.tpl');
+
+		$benefitTable = new BenefitTable($this->db);
+		$hiddenVipLists = $benefitTable->fetchAll("`status` = '0'");
+		$publishedVipLists = $benefitTable->fetchAll("`status` = '1'");
+		foreach ($publishedVipLists as $benefit) {
+			$this->addInfoToBenefit($benefit);
+		}
+		$closedVipLists = $benefitTable->fetchAll("`status` = '2'");
+		foreach ($closedVipLists as $benefit) {
+			$this->addInfoToBenefit($benefit);
+		}
+
+		$this->engine->assign('hidden_viplists', $hiddenVipLists);
+		$this->engine->assign('published_viplists', $publishedVipLists);
+		$this->engine->assign('closed_viplists', $closedVipLists);
 	}
 
 	public function handleLogout() {
@@ -507,8 +556,6 @@ class App {
 	}
 
 	public function run() {
-
-		$this->engine->setTemplateFile('index.tpl');
 		$this->engine->assign('layout', 'app_main_layout.tpl');
 
 		$this->slim->notFound(function () {
@@ -531,9 +578,8 @@ class App {
 		$this->slim->get('/' . $this->getRoute('logout'), array($this, 'handleLogout'));
 		$this->slim->get('/' . $this->getRoute('logout') . '/', array($this, 'handleLogout'));
 		$this->slim->get('/logout.php', array($this, 'handleLogout'));
-		$this->slim->error(function (\Exception $e) {
-		    die();
-		});
+		$this->slim->get('/' . $this->getRoute('dashboard'), array($this, 'handleDashboard') );
+		$this->slim->get('/' . $this->getRoute('dashboard') . '/', array($this, 'handleDashboard') );
 
 		try {
 			$this->slim->get('/' .  $this->getRoute('viplist') . '/:eventfbid', function($eventfbid) {
@@ -550,6 +596,14 @@ class App {
 			});
 			$this->slim->get('/' .  $this->getRoute('viplist') . '/:eventfbid/regulamento/', function($eventfbid) {
 				$this->handleBenefitRules($eventfbid, App::VIPLIST_TYPE);
+			});
+			$this->slim->get('/' . $this->getRoute('viplist') . '/:eventfbid/' . $this->getRoute('download') . '/', function($eventfbid) {
+				if($this->currentUserData->isAdministrator()) {
+					$this->handleBenefitDownload($eventfbid, App::VIPLIST_TYPE);
+				}
+				else {
+					$this->slim->error();
+				}
 			});
 		}
 		catch(Exception $exception) {
@@ -739,7 +793,7 @@ class App {
                 $text .= ($benefit->current_user_attended) ? _( 'You\'re the only person who is participating.' ) : _( 'Only one person is participating.' );
                 break;
             default:
-                $text .= '<strong>' . htmlentities( $benefit->num_people_claimed ) . '</strong> ';
+                $text .= htmlentities( $benefit->num_people_claimed ) . '&nbsp;';
                 switch ($benefit->accepted_gender) {
                     case 'female':
                         $text .= 'mulheres';
@@ -764,7 +818,7 @@ class App {
 	 * @param	number	$level Required. Level number between 0 and 100.
 	 * @return	string	'success', 'default', 'info', 'warning', 'danger' ou 'text-muted', dependendo do valor.
 	 */
-    public function getCssClassBasedOnLevel($level) {
+    public static function getCssClassBasedOnLevel($level) {
     	if(is_array($level) && isset($level['level'])) {
     		$percent = abs($level['level']);
     	}
@@ -772,19 +826,23 @@ class App {
     		$percent = $level;
     	}
     	$percent = number_format( $percent, 2 );
-		if ( $percent >= 80 ) {
-			return 'success';
-		} elseif ( $percent >= 75 & $percent < 80 ) {
-			return 'default';
-		} elseif ( $percent >= 50 && $percent < 75 ) {
-			return 'info';
-		} elseif ( $percent >= 33.96 && $percent < 50 ) {
-			return 'warning';
-		} elseif ( $percent < 33.96 && $percent > 0 ) {
-			return 'danger';
-		} else {
-			return 'text-muted';
+			if ( $percent >= 80 ) {
+				return 'success';
+			} elseif ( $percent >= 75 & $percent < 80 ) {
+				return 'default';
+			} elseif ( $percent >= 50 && $percent < 75 ) {
+				return 'info';
+			} elseif ( $percent >= 33.96 && $percent < 50 ) {
+				return 'warning';
+			} elseif ( $percent < 33.96 && $percent > 0 ) {
+				return 'danger';
+			} else {
+				return 'text-muted';
+			}
+    } // end function getCssClassBasedOnLevel
+
+		public function engineGetCssClassBasedOnLevel($params, $smarty) {
+			return App::getCssClassBasedOnLevel($params['level']);
 		}
-    }
 
 }

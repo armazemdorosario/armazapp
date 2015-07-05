@@ -1,4 +1,16 @@
 <main>
+  <header>
+      <img class="pull-right hidden-xs col-sm-6 col-lg-4" src="{$benefit->photo}" />
+      <a class="btn btn-default btn-md" href="{$app_url}">&laquo; Voltar</a>
+      <h1>Lista VIP: {$benefit->name}</h1>
+      {$benefit->info_text}.
+      <a href="//facebook.com/{$benefit->eventfbid}" rel="external" target="_blank">
+        Ver evento no Facebook
+      </a>
+  </header>
+  <div class="clearfix"></div>
+  <hr />
+  <div class="clearfix"></div>
   <ul id="container" class="list-inline has-crush">
   {foreach from=$current_viplist_users item=user}
   <li class="item col-xs-4 col-sm-3 col-md-2 col-lg-2">

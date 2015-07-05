@@ -1,4 +1,3 @@
-{include file='app_navbar.tpl'}
 {include file='app_header.tpl'}
 <div class="container">
 {include file='app_messages.tpl'}

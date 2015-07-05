@@ -30,13 +30,13 @@ class UserBenefitTable extends Table {
 		return parent::fetch($data);
 	}
 
-	public function fetchUsersByEvent($eventfbid, $benefit_type = 1, $includePrivate = false) {
-
+	public function fetchUsersByEvent($eventfbid, $benefit_type = 1, $includePrivate = false, $orderby = '') {
 		if(!Benefit::isAnyEventFbidValid($eventfbid)) {
 			throw new Exception('Cannot fetch users-benefits data because benefit ID is invalid', 611);
 		}
 		$where = "`eventfbid` = '$eventfbid' AND `benefit` = '$benefit_type'";
 		$where .= true === $includePrivate ? '' : " AND `private` = '0'";
+		$where .= empty($orderby) ? '' : " ORDER BY $orderby";
 		try {
 			return parent::fetchAll($where);
 		}

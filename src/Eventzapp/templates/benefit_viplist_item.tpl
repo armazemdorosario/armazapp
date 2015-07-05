@@ -1,7 +1,8 @@
 <article class="has-progress-on-top event-{$benefit->eventfbid} benefit-{$benefit->benefit_type}" id="benefit-{$benefit->eventfbid}-{$benefit->benefit_type}">
 	<div class="list-group-item {benefit_classes benefit=$benefit}">
 		{include file='benefit_header.tpl'}
-		<p>{t}O limite desta Lista VIP é de {/t}{$benefit->max_num_people_chosen} {g gender=$benefit->accepted_gender general='pessoas' females='mulheres' males='homens'}</p>
+
+		<p class="text-info">{$benefit->info_text}. {t}O limite desta Lista VIP é de {/t}{$benefit->max_num_people_chosen} {g gender=$benefit->accepted_gender general='pessoas' females='mulheres' males='homens'}</p>
 		{if $benefit->is_full_vip_list != 1 AND $benefit->current_gender_can_attend == 1}
 			{if $benefit->current_user_attended == 1}
 				<p class="alert alert-success">
@@ -40,19 +41,16 @@
 				</div>
 			{/if}
 		{/if}
-		<p class="text-info">{$benefit->info_text}</p>
-		<!--
+
 		<p>
-			<a class="btn btn-sm btn-default" href="{$app_url}/benefits/{$benefit->eventfbid}/{$benefit->benefit_type}" onClick="_gaq.push(['_trackEvent', 'see_whos_on_the_list', 'btn_default_click', '{$benefit->eventfbid}/{$benefit->benefit_type}']);" target="_top" >
-				{t}See who is on the list{/t}
+			<a class="btn btn-sm btn-default" href="{$app_url}/{$app_routes.viplist}/{$benefit->eventfbid}" onClick="_gaq.push(['_trackEvent', 'see_whos_on_the_list', 'btn_default_click', '{$benefit->eventfbid}']);" target="_top" >
+				{t}Veja quem está na lista{/t}
 			</a>
 		</p>
-		-->
 		<footer>
 			<p>
 		        <small>
-		            {t}Data de fechamento da lista{/t}: {$benefit->db_expiration_date|date_format:"%d/%m/%Y, %H:%M"}.
-		            <a href="{$app_url}/{$app_routes.viplist}/{$benefit->eventfbid}/{$app_routes.rules}/" onclick="_gaq.push(['_trackEvent', 'rules', 'rules_click', '{$benefit->eventfbid}/{$benefit->benefit_type}']); return false;">{t}Regulamento{/t}</a>
+		            Data de fechamento: {$benefit->db_expiration_date|date_format:"%d/%m/%Y, %H:%M"}. <a href="{$app_url}/{$app_routes.viplist}/{$benefit->eventfbid}/{$app_routes.rules}/" onclick="_gaq.push(['_trackEvent', 'rules', 'rules_click', '{$benefit->eventfbid}/{$benefit->benefit_type}']); return false;">{t}Regulamento{/t}</a>
 		        </small>
 		    </p>
 		</footer>

@@ -7,10 +7,7 @@
 		<meta name="title" content="{$html_meta.title}" />
 		<meta name="description" content="{$html_meta.description}" />
 
-		<!-- stylesheets -->
-		<link rel="stylesheet" href="{$app_url}/bower_components/bootstrap/dist/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="{$app_url}/css/theme.css" />
-		<!-- /stylesheets -->
+		{include file='stylesheets.tpl'}
 
 		<!-- schema.org -->
 		<meta itemprop="description" content="{$html_meta.description}" />
@@ -69,7 +66,7 @@
 		type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
 		{/literal}
 		</script>
-		
+
 		<!--End of Zopim Live Chat Script-->
 
 	</head>
