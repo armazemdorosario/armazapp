@@ -158,4 +158,8 @@ class Benefit {
         $percentage = 100 - $this->getProgress();
         return $percentage > 100 ? 100 : $percentage;
     }
+
+    public function __toString() {
+      return json_encode( $this );
+    }
 }

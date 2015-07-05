@@ -47,7 +47,7 @@ class ViewUserBenefit {
       'userfbid'          => \FILTER_SANITIZE_STRING,
       'ub_date_created'   => \FILTER_SANITIZE_STRING,
       'eventfbid'         => \FILTER_SANITIZE_STRING,
-      'private'           => \FILTER_SANITIZE_NUMBER_INT,
+      'private'           => \FILTER_SANITIZE_STRING,
       'benefit'/*type*/   => \FILTER_SANITIZE_NUMBER_INT,
       'chosen'            => \FILTER_SANITIZE_NUMBER_INT,
       'actually_attended' => \FILTER_SANITIZE_NUMBER_INT,

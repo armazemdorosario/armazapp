@@ -751,7 +751,7 @@ header#header .page-header {
 	left: -90px;
 
 
-	top: 15px;
+	top: 0px;
 
 
 	transform:rotate(-30deg);
@@ -802,8 +802,8 @@ header#header .page-header {
 .strip-full header h1 a:before {
 
 
-	content: 'Lista cheia';
-
+	content: 'Lista VIP cheia';
+z-index: 24;
 
 	background-color: #d9534f;
 
@@ -820,7 +820,7 @@ header#header .page-header {
 .strip-closed header h1 a:before {
 
 
-	content: 'Lista fechada';
+	content: 'Lista VIP fechada';
 
 
 	background-color: #f0ad4e;
@@ -835,7 +835,7 @@ header#header .page-header {
 .strip-open header h1 a:before {
 
 
-	content: 'Lista aberta';
+	content: 'Lista VIP aberta';
 
 
 	background-color: #5cb85c;
@@ -1123,4 +1123,18 @@ li a.private img {
 	filter: grayscale(100%);
 	opacity: 0.5;
 	-webkit-filter: grayscale(100%);
+}
+
+table { page-break-after: always; page-break-inside:auto }
+tr,td { page-break-inside:avoid; page-break-after:auto }
+thead { display:table-header-group }
+tfoot { display:table-footer-group }
+@media print {
+	a[href]:after {
+		content: "" !important;
+	}
+	table {page-break-after:always}
+	td * {
+		page-break-inside:avoid;
+	}
 }
